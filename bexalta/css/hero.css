@@ -38,7 +38,7 @@
 /* ---------- Main heading ---------- */
 .hero__heading {
   position: absolute;
-  top: 223px;
+  top: 183px;
   left: 0;
   width: 100%;
   font-weight: var(--bx-weight-light);
@@ -52,7 +52,7 @@
 /* ---------- Subtext paragraph ---------- */
 .hero__subtext {
   position: absolute;
-  top: 499px;
+  top: 459px;
   left: 50%;
   transform: translateX(-50%);
   width: min(88vw, 340px);
@@ -74,7 +74,7 @@
 /* ---------- Counter row (bx-animated-counter) ---------- */
 .hero__counters {
   position: absolute;
-  top: 608px;
+  top: 560px;
   left: 50%;
   transform: translateX(-50%);
   width: min(92vw, 380px);
@@ -118,7 +118,7 @@
 /* ---------- Tags grid 2x2 (bx-stagger-tags) ---------- */
 .hero__tags {
   position: absolute;
-  top: 726px;
+  top: 670px;
   left: 50%;
   transform: translateX(-50%);
   width: min(85vw, 340px);
