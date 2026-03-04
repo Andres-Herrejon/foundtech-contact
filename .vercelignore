@@ -1,0 +1,7 @@
+docs/
+*.md
+PROGRESS-*.md
+PLAN-*.md
+.claude/
+.gemini/
+references/
