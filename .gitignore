@@ -1,28 +1,36 @@
+# OS
 .DS_Store
-*.ply
-references/
+Thumbs.db
+
+# Editor
+.vscode/
+.idea/
+
+# Claude / AI
 .claude/
 .gemini/
+
+# Node (if ever added)
 node_modules/
 dist/
 .vite/
+
+# Vercel local
 .vercel/
 
-# Unused assets (not referenced in index.html)
-assets/impact-particle.gif
-assets/impact-particle2.gif
-assets/nave_industrial.png
-assets/nave_industrial_depth.png
-assets/propiedad_02.png
-assets/propiedad_02_depth.png
-assets/propiedad_03.png
-assets/propiedad_03_depth.png
-assets/particle_sprite.png
-assets/foundtech-logo-green.svg
-assets/logo_audi.svg
-assets/logo_farmacias_gdl.svg
-assets/logo_vw.svg
-assets/preloader.svg
-assets/preloader_preview.html
-assets/3d-mex-map/
-assets/Logo 3D/
+# Environment
+.env
+.env.local
+.env.*.local
+
+# Backup files
+*.bak
+*.swp
+*~
+
+# PLY 3D files
+*.ply
+
+# References / drafts
+references/
+drafts/
