@@ -1,0 +1,215 @@
+/* ==========================================================================
+   base.css — Global resets + typography
+   Bexalta V2 | Foundtech
+   Mobile-first (390px) — references tokens.css custom properties
+   ========================================================================== */
+
+/* ---------- Box-sizing reset ---------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* ---------- Root font size ---------- */
+html {
+  font-size: 16px;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  overflow-x: hidden;
+}
+
+/* ---------- Body ---------- */
+body {
+  font-family: var(--bx-font);
+  background-color: var(--bx-bg);
+  color: var(--bx-text);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+  line-height: 1.4;
+}
+
+/* ---------- Base typography: headings ---------- */
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 600;
+  line-height: 1.1;
+  color: var(--bx-text);
+  letter-spacing: -0.01em;
+}
+
+h1 {
+  font-size: 2.25rem;   /* ~36px */
+}
+
+h2 {
+  font-size: 1.75rem;   /* ~28px */
+}
+
+h3 {
+  font-size: 1.375rem;  /* ~22px */
+}
+
+h4 {
+  font-size: 1.125rem;  /* ~18px */
+}
+
+h5 {
+  font-size: 1rem;      /* ~16px */
+}
+
+h6 {
+  font-size: 0.875rem;  /* ~14px */
+}
+
+/* ---------- Paragraph ---------- */
+p {
+  font-size: 0.875rem;  /* 14px */
+  font-weight: var(--bx-weight-body);
+  line-height: 1.5;
+  color: var(--bx-text2);
+}
+
+/* ---------- Links ---------- */
+a {
+  color: var(--bx-primary);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+a:hover,
+a:focus-visible {
+  color: var(--bx-primary-bright);
+}
+
+/* ---------- Buttons reset ---------- */
+button {
+  font-family: inherit;
+  font-size: inherit;
+  color: inherit;
+  background: none;
+  border: none;
+  cursor: pointer;
+  -webkit-appearance: none;
+  appearance: none;
+  outline: none;
+}
+
+button:focus-visible {
+  outline: 2px solid var(--bx-primary);
+  outline-offset: 2px;
+}
+
+/* ---------- Media defaults ---------- */
+img, video, canvas, svg {
+  display: block;
+  max-width: 100%;
+}
+
+img {
+  height: auto;
+}
+
+/* ---------- Lists reset ---------- */
+ul, ol {
+  list-style: none;
+}
+
+/* ---------- Selection ---------- */
+::selection {
+  background-color: var(--bx-primary);
+  color: var(--bx-bg);
+}
+
+/* ---------- Staggered fade-in utility ---------- */
+.bx-stagger-reveal > * {
+  opacity: 0;
+  transform: translateY(var(--bx-slide-distance));
+  transition:
+    opacity var(--bx-reveal-duration) var(--bx-reveal-ease),
+    transform var(--bx-reveal-duration) var(--bx-reveal-ease);
+}
+.bx-stagger-reveal.is-revealed > *:nth-child(1) { transition-delay: calc(var(--bx-reveal-stagger) * 0); }
+.bx-stagger-reveal.is-revealed > *:nth-child(2) { transition-delay: calc(var(--bx-reveal-stagger) * 1); }
+.bx-stagger-reveal.is-revealed > *:nth-child(3) { transition-delay: calc(var(--bx-reveal-stagger) * 2); }
+.bx-stagger-reveal.is-revealed > *:nth-child(4) { transition-delay: calc(var(--bx-reveal-stagger) * 3); }
+.bx-stagger-reveal.is-revealed > *:nth-child(5) { transition-delay: calc(var(--bx-reveal-stagger) * 4); }
+.bx-stagger-reveal.is-revealed > * {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ---------- Slide + fade combo ---------- */
+.bx-slide-fade {
+  opacity: 0;
+  transform: translateX(-24px);
+  transition:
+    opacity var(--bx-fade-duration) ease-out,
+    transform var(--bx-fade-duration) ease-out;
+}
+.bx-slide-fade.is-revealed {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* ---------- Modal/Dialog animations ---------- */
+.bx-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(5, 5, 8, 0.7);
+  opacity: 0;
+  transition: opacity 200ms ease-out;
+  z-index: 200;
+  pointer-events: none;
+}
+.bx-modal-backdrop.is-open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.bx-modal-content {
+  opacity: 0;
+  transform: scale(0.95);
+  transition:
+    opacity 300ms cubic-bezier(0.16, 1, 0.3, 1) 200ms,
+    transform 300ms cubic-bezier(0.16, 1, 0.3, 1) 200ms;
+}
+.bx-modal-backdrop.is-open .bx-modal-content {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* Exit: faster, no delay */
+.bx-modal-backdrop.is-closing .bx-modal-content {
+  opacity: 0;
+  transform: scale(0.95);
+  transition:
+    opacity 200ms ease-in,
+    transform 200ms ease-in;
+}
+.bx-modal-backdrop.is-closing {
+  opacity: 0;
+  transition: opacity 200ms ease-in 100ms;
+}
+
+/* Blur background when modal open */
+.bx-modal-blur {
+  filter: blur(0);
+  transition: filter 300ms ease-out;
+}
+.bx-modal-blur.is-blurred {
+  filter: blur(10px);
+}
+
+/* ---------- Reduced motion ---------- */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

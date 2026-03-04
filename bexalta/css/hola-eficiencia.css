@@ -1,0 +1,161 @@
+/* ==========================================================================
+   hola-eficiencia.css — Hola Eficiencia section (single pinned)
+   Bexalta V2 | Foundtech
+   Mobile-first (390px) — references tokens.css custom properties
+   T5.1: Merged 3 sections into 1 pinned section with synced hscroll metrics
+   ========================================================================== */
+
+/* ---------- Section background ---------- */
+.he-section {
+  background-color: #050505;
+  position: relative;
+  overflow: visible;
+}
+
+/* ---------- Ambient shell visibility (Phase 4.4) ---------- */
+.bx-ambient-canvas {
+  mix-blend-mode: screen;
+}
+
+/* ---------- Header (bx-scroll-reveal wrapper) ---------- */
+.he-header {
+  position: fixed;
+  top: var(--bx-header-top);          /* 60px */
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(100%, var(--bx-section-width));
+  box-sizing: border-box;
+  padding: 0 var(--bx-padding-x);    /* 0 28px */
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  z-index: 2;
+}
+
+/* Label: "HOLA" */
+.he-label {
+  font-family: var(--bx-font);
+  font-weight: var(--bx-weight-bold);
+  font-size: 16px;
+  line-height: 1;
+  letter-spacing: 1.65px;
+  text-transform: uppercase;
+  color: #c7c6c6;
+  margin: 0;
+}
+
+/* Heading: "Eficiencia / Operativa" */
+.he-heading {
+  font-family: var(--bx-font);
+  font-weight: var(--bx-weight-light);
+  font-size: 36px;
+  line-height: 39.6px;
+  color: var(--bx-primary);
+  margin: 0;
+}
+
+.he-heading span {
+  display: block;
+}
+
+/* ---------- Floating dot decorations ---------- */
+.he-dots {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 390px;
+  height: 844px;
+  pointer-events: none;
+  z-index: 1;
+  display: none;
+}
+
+.he-dot {
+  position: absolute;
+  background-color: var(--bx-primary);
+  border-radius: 50%;
+}
+
+/* Screen 8 dots (single set for merged section) */
+.he-dot--s8-1 { left: 31.2px;  top: 168.8px;  width: 3px; height: 3px; opacity: 0.15; }
+.he-dot--s8-2 { left: 341.2px; top: 295.4px;  width: 2px; height: 2px; opacity: 0.10; }
+.he-dot--s8-3 { left: 58.5px;  top: 629px;    width: 4px; height: 4px; opacity: 0.12; }
+.he-dot--s8-4 { left: 356.8px; top: 464.2px;  width: 2px; height: 2px; opacity: 0.08; }
+.he-dot--s8-5 { left: 19.5px;  top: 503.4px;  width: 3px; height: 3px; opacity: 0.10; }
+
+/* ---------- Content area (centered metrics) ---------- */
+.he-content {
+  position: absolute;
+  top: 190px;
+  left: 24px;
+  width: 342px;
+  height: 552px;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  justify-content: center;
+  align-items: flex-start;
+  z-index: 2;
+}
+
+/* ---------- Metric block ---------- */
+.he-metric {
+  width: 342px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* Metric H2: OPTIMIZA / INCREMENTA / REDUCE — stays fixed */
+.he-metric__title {
+  font-family: var(--bx-font);
+  font-weight: var(--bx-weight-light);
+  font-size: 29px;
+  line-height: 31.9px;
+  letter-spacing: 1.45px;
+  text-transform: uppercase;
+  text-align: center;
+  color: var(--bx-primary);
+  margin: 0;
+  width: 100%;
+}
+
+/* ---------- Metric horizontal scroll container ---------- */
+.he-metric__scroll {
+  width: 100%;
+  overflow: hidden;
+}
+
+/* Metric body text (inside hscroll pages) */
+.he-metric__body {
+  font-family: var(--bx-font);
+  font-weight: var(--bx-weight-body);
+  font-size: 23px;
+  line-height: 23.4px;
+  letter-spacing: 1.44px;
+  text-align: center;
+  color: #c7c6c6;
+  margin: 0;
+  width: 100%;
+}
+
+/* Multi-line body (stacked lines) */
+.he-metric__line {
+  display: block;
+}
+
+/* ---------- Opacity-crossfade override (replaces horizontal scroll) ---------- */
+/* Stack all pages in the same cell so they overlap */
+.he-metric__scroll .bx-hscroll__track {
+  display: grid;
+  grid-template-columns: 1fr;
+  will-change: auto;
+}
+
+.he-metric__scroll .bx-hscroll__page {
+  grid-row: 1;
+  grid-column: 1;
+  flex: unset;
+  width: 100%;
+}

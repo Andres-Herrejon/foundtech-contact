@@ -1,0 +1,133 @@
+/* ==========================================================================
+   upgrade-afuera.css — Upgrade Hacia Afuera (single pinned section)
+   Bexalta V2 | Foundtech
+   Mobile-first (390px) — references tokens.css custom properties
+   ========================================================================== */
+
+/* ---------- Section background ---------- */
+.uf-section {
+  background-color: #050505;
+  position: relative;
+  overflow: visible;
+}
+
+/* ---------- Header (fixed, JS-driven fade) ---------- */
+.uf-header {
+  position: fixed;
+  top: var(--bx-header-top);           /* 60px base, responsive */
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(100%, var(--bx-section-width));
+  box-sizing: border-box;
+  padding: 0 var(--bx-padding-x);      /* 0 28px */
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  z-index: 100;
+  opacity: 0;                           /* JS-driven via initFixedHeaderFade */
+  pointer-events: none;
+}
+
+/* Label: "UPGRADE" */
+.uf-label {
+  font-family: var(--bx-font);
+  font-weight: var(--bx-weight-bold);
+  font-size: 16px;
+  line-height: 1;
+  letter-spacing: 1.65px;
+  text-transform: uppercase;
+  color: #c7c6c6;
+  margin: 0;
+}
+
+/* Heading: "Hacia / Afuera" */
+.uf-heading {
+  font-family: var(--bx-font);
+  font-weight: var(--bx-weight-light);
+  font-size: 36px;
+  line-height: 39.6px;
+  color: var(--bx-primary);
+  margin: 0;
+}
+
+.uf-heading span {
+  display: block;
+}
+
+/* ---------- Floating dot decorations ---------- */
+.uf-dots {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 390px;
+  height: 844px;
+  pointer-events: none;
+  z-index: 1;
+  display: none;
+}
+
+.uf-dot {
+  position: absolute;
+  background-color: var(--bx-primary);
+  border-radius: 50%;
+}
+
+.uf-dot--1 { left: 39px;    top: 151.92px; width: 3px; height: 3px; opacity: 0.10; }
+.uf-dot--2 { left: 356.8px; top: 337.6px;  width: 2px; height: 2px; opacity: 0.08; }
+.uf-dot--3 { left: 23.4px;  top: 654.33px; width: 4px; height: 4px; opacity: 0.12; }
+
+/* ---------- Stacked widget container (like ua-shape-morph) ---------- */
+.uf-shape-morph {
+  position: absolute;
+  top: 140px;                         /* raised ~47px vs global token for breathing room */
+  left: 0;
+  width: 100%;
+  height: var(--bx-theater-height);   /* 472px */
+  z-index: 1;
+}
+
+/* ---------- Individual layers (crossfade via JS opacity) ---------- */
+.uf-shape-layer {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.uf-shape-layer canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+  /* Aspect ratio is preserved by JS drawFrameAR (contain/letterbox) */
+}
+
+/* ---------- Bottom paragraph (absolute within pinned section, like Adentro) ---------- */
+.uf-paragraph {
+  position: absolute;
+  bottom: 80px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: var(--bx-section-width);
+  padding: 0 var(--bx-padding-x);
+  z-index: 20;
+  opacity: 0;           /* starts hidden — shown by JS */
+  pointer-events: none;
+}
+
+.uf-paragraph__text {
+  font-family: var(--bx-font);
+  font-weight: var(--bx-weight-body);
+  font-size: 18px;
+  line-height: 21px;
+  color: #c7c6c6;
+  margin: 0;
+  max-width: 341px;
+}
+
+/* Green accent for highlighted phrases */
+.uf-paragraph__text strong {
+  color: var(--bx-primary);
+  font-weight: var(--bx-weight-body); /* keeps body weight, only color change */
+}

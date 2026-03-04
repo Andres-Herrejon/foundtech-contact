@@ -1,0 +1,850 @@
+/* ==========================================================================
+   responsive.css — Breakpoint overrides (mobile-first)
+   Bexalta V2 | Foundtech
+   Base: 390px  →  768px (tablet)  →  1024px (small desktop)  →  1440px (desktop)
+   ========================================================================== */
+
+/* ==========================================================================
+   TABLET — min-width: 768px
+   Scale containers to ~600px, bump typography, taller canvas areas
+   ========================================================================== */
+
+@media (min-width: 768px) {
+
+  /* ── Token overrides ─────────────────────────────────────────────────── */
+  :root {
+    --bx-section-width:    600px;
+    --bx-section-height:   1024px;
+    --bx-padding-x:        36px;
+    --bx-content-width:    528px;     /* 600 - 36*2 */
+    --bx-header-top:       80px;
+    --bx-theater-top:      230px;
+    --bx-theater-height:   560px;
+    --bx-footer-top:       820px;
+  }
+
+  /* ── Base typography scale ───────────────────────────────────────────── */
+  h1 { font-size: 2.75rem; }         /* ~44px */
+  h2 { font-size: 2.125rem; }        /* ~34px */
+  h3 { font-size: 1.625rem; }        /* ~26px */
+  p  { font-size: 1rem; }            /* 16px  */
+
+  /* ── Layout primitives ───────────────────────────────────────────────── */
+  .bx-canvas-area {
+    height: 560px;
+  }
+
+  /* ── Hero ─────────────────────────────────────────────────────────────── */
+  .hero {
+    max-width: var(--bx-section-width);
+    height: var(--bx-section-height);
+  }
+
+  .hero__logo {
+    top: 80px;
+    height: 110px;
+  }
+
+  .hero__heading {
+    top: 270px;
+    font-size: 44px;
+    line-height: 50px;
+    letter-spacing: -0.88px;
+  }
+
+  .hero__subtext {
+    top: 580px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 400px;
+    font-size: 28px;
+    line-height: 30px;
+  }
+
+  .hero__counters {
+    top: 720px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 528px;
+    gap: 72px;
+  }
+
+  .hero__counter-value {
+    font-size: 44px;
+    line-height: 44px;
+  }
+
+  .hero__counter-label {
+    font-size: 20px;
+    letter-spacing: 2px;
+  }
+
+  .hero__tags {
+    top: 870px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 420px;
+    gap: 12px 32px;
+  }
+
+  .hero__tag {
+    font-size: 16px;
+    letter-spacing: 1.6px;
+  }
+
+  /* ── Imaginemos (single pinned section) ─────────────────────────────── */
+  .imag-city-grid {
+    top: 530px;
+    left: -5px;
+    width: 610px;
+    height: 460px;
+  }
+
+  /* ── Shared section header scale (Imaginemos, Adiós Riesgos, etc.) ── */
+  .imag-heading,
+  .ar-heading,
+  .he-heading,
+  .ua-heading,
+  .uf-heading,
+  .cr-heading {
+    font-size: 44px;
+    line-height: 48px;
+  }
+
+  .imag-label,
+  .ar-label,
+  .he-label,
+  .ua-label,
+  .uf-label,
+  .cr-label {
+    font-size: 16px;
+    letter-spacing: 2px;
+  }
+
+  /* ── Adiós Riesgos ──────────────────────────────────────────────────── */
+  .ar-shape-morph {
+    width: 100%;
+    height: var(--bx-theater-height);
+  }
+
+  .ar-paragraph__text {
+    font-size: 22px;
+    line-height: 26px;
+    max-width: 528px;
+  }
+
+  /* ── Show dots on tablet+ (hidden at mobile base) ────────────────────── */
+  .he-dots, .ua-dots, .uf-dots {
+    display: block;
+  }
+
+  /* ── Hola Eficiencia ─────────────────────────────────────────────────── */
+  .he-dots {
+    width: 600px;
+    height: var(--bx-section-height);
+  }
+
+  .he-content {
+    top: 230px;
+    left: 36px;
+    width: 528px;
+    height: 650px;
+    gap: 48px;
+  }
+
+  .he-metric {
+    width: 528px;
+  }
+
+  .he-metric__title {
+    font-size: 34px;
+    line-height: 37px;
+    letter-spacing: 1.7px;
+  }
+
+  .he-metric__body {
+    font-size: 26px;
+    line-height: 28px;
+    letter-spacing: 1.6px;
+  }
+
+  /* ── Upgrade Desde Adentro ───────────────────────────────────────────── */
+  .ua-dots {
+    width: 600px;
+    height: var(--bx-section-height);
+  }
+
+  .ua-shape-morph {
+    top: 180px;
+    width: 600px;
+    height: var(--bx-theater-height);
+  }
+
+  .ua-paragraph {
+    padding: 0 36px;
+  }
+
+  .ua-paragraph__text {
+    font-size: 22px;
+    line-height: 26px;
+    max-width: 528px;
+  }
+
+  /* ── Upgrade Hacia Afuera ────────────────────────────────────────────── */
+  .uf-dots {
+    width: 600px;
+    height: var(--bx-section-height);
+  }
+
+  .uf-shape-morph {
+    top: 180px;
+    width: 600px;
+    height: var(--bx-theater-height);
+  }
+
+  .uf-paragraph {
+    padding: 0 36px;
+  }
+
+  .uf-paragraph__text {
+    font-size: 22px;
+    line-height: 26px;
+    max-width: 528px;
+  }
+
+  /* ── Credenciales ────────────────────────────────────────────────────── */
+  .cr-logo__img {
+    width: 400px;
+    height: auto;
+  }
+
+  .cr-about-heading {
+    top: 250px;
+    width: 400px;
+  }
+
+  .cr-about-heading__text {
+    font-size: 34px;
+    line-height: 52px;
+  }
+
+  .cr-partner {
+    top: 640px;
+    width: 500px;
+  }
+
+  .cr-partner__text {
+    font-size: 22px;
+    line-height: 26px;
+  }
+
+  .cr-carousel {
+    top: 930px;
+    width: 600px;
+    height: 20px;
+  }
+
+  .cr-carousel__logo {
+    height: 20px;
+  }
+
+  .cr-shape-morph {
+    width: 600px;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .cr-paragraph__text {
+    font-size: 22px;
+    line-height: 26px;
+    max-width: 420px;
+  }
+
+  /* ── CTA ──────────────────────────────────────────────────────────────── */
+  .cta {
+    max-width: var(--bx-section-width);
+    height: var(--bx-section-height);
+  }
+
+  .cta__label {
+    top: 100px;
+    font-size: 44px;
+    letter-spacing: 0.02em;
+  }
+
+  .cta__headings {
+    top: 210px;
+    gap: 12px;
+  }
+
+  .cta__line {
+    font-size: 44px;
+    line-height: 1.15;
+  }
+
+  .cta__sparkles {
+    top: 580px;
+    gap: 64px;
+  }
+
+  .cta__hoy {
+    font-size: 72px;
+    line-height: 1;
+    letter-spacing: 0.14em;
+  }
+
+  .cta__button {
+    width: 228px;
+    height: 56px;
+    font-size: 16px;
+    padding: 14px 36px;
+  }
+
+  .cta__logo {
+    top: 870px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 300px;
+    height: auto;
+  }
+}
+
+/* ==========================================================================
+   SMALL DESKTOP — min-width: 1024px
+   Wider containers (800px), more side padding, scale canvas and typography
+   ========================================================================== */
+
+@media (min-width: 1024px) {
+
+  /* ── Token overrides ─────────────────────────────────────────────────── */
+  :root {
+    --bx-section-width:    800px;
+    --bx-section-height:   1024px;
+    --bx-padding-x:        48px;
+    --bx-content-width:    704px;     /* 800 - 48*2 */
+    --bx-header-top:       90px;
+    --bx-theater-top:      250px;
+    --bx-theater-height:   580px;
+    --bx-footer-top:       860px;
+  }
+
+  /* ── Base typography ─────────────────────────────────────────────────── */
+  h1 { font-size: 3rem; }            /* 48px */
+  h2 { font-size: 2.25rem; }         /* 36px */
+  h3 { font-size: 1.75rem; }         /* 28px */
+
+  /* ── Layout ──────────────────────────────────────────────────────────── */
+  .bx-canvas-area {
+    height: 580px;
+  }
+
+  /* ── Hero ─────────────────────────────────────────────────────────────── */
+  .hero__logo {
+    top: 90px;
+    height: 120px;
+  }
+
+  .hero__heading {
+    top: 290px;
+    font-size: 48px;
+    line-height: 55px;
+    letter-spacing: -0.96px;
+    padding: 0 48px;
+  }
+
+  .hero__subtext {
+    top: 600px;
+    width: 460px;
+    font-size: 30px;
+    line-height: 34px;
+  }
+
+  .hero__counters {
+    top: 740px;
+    width: 600px;
+    gap: 96px;
+  }
+
+  .hero__counter-value {
+    font-size: 48px;
+    line-height: 48px;
+  }
+
+  .hero__counter-label {
+    font-size: 22px;
+    letter-spacing: 2.2px;
+  }
+
+  .hero__tags {
+    top: 880px;
+    width: 500px;
+    gap: 14px 40px;
+  }
+
+  .hero__tag {
+    font-size: 17px;
+    letter-spacing: 1.7px;
+  }
+
+  /* ── Imaginemos (single pinned section) ─────────────────────────────── */
+  .imag-city-grid {
+    top: 550px;
+    width: 810px;
+    height: 480px;
+  }
+
+  /* ── Shared heading scale ────────────────────────────────────────────── */
+  .imag-heading,
+  .ar-heading,
+  .he-heading,
+  .ua-heading,
+  .uf-heading,
+  .cr-heading {
+    font-size: 48px;
+    line-height: 52px;
+  }
+
+  .imag-label,
+  .ar-label,
+  .he-label,
+  .ua-label,
+  .uf-label,
+  .cr-label {
+    font-size: 17px;
+    letter-spacing: 2.2px;
+  }
+
+  /* ── Adiós Riesgos ──────────────────────────────────────────────────── */
+  .ar-shape-morph {
+    width: 100%;
+  }
+
+  .ar-paragraph__text {
+    font-size: 24px;
+    line-height: 29px;
+    max-width: 704px;
+  }
+
+  /* ── Hola Eficiencia ─────────────────────────────────────────────────── */
+  .he-dots {
+    width: 800px;
+  }
+
+  .he-content {
+    left: 48px;
+    width: 704px;
+    height: 680px;
+    gap: 52px;
+  }
+
+  .he-metric {
+    width: 704px;
+  }
+
+  .he-metric__title {
+    font-size: 38px;
+    line-height: 42px;
+  }
+
+  .he-metric__body {
+    font-size: 28px;
+    line-height: 32px;
+  }
+
+  /* ── Upgrade Desde Adentro ───────────────────────────────────────────── */
+  .ua-dots {
+    width: 800px;
+  }
+
+  .ua-shape-morph {
+    top: 195px;
+    width: 800px;
+  }
+
+  .ua-paragraph__text {
+    font-size: 24px;
+    line-height: 29px;
+    max-width: 704px;
+  }
+
+  /* ── Upgrade Hacia Afuera ────────────────────────────────────────────── */
+  .uf-dots {
+    width: 800px;
+  }
+
+  .uf-shape-morph {
+    top: 195px;
+    width: 800px;
+  }
+
+  .uf-paragraph__text {
+    font-size: 24px;
+    line-height: 29px;
+    max-width: 704px;
+  }
+
+  /* ── Credenciales ────────────────────────────────────────────────────── */
+  .cr-logo__img {
+    width: 450px;
+  }
+
+  .cr-about-heading {
+    top: 260px;
+    width: 480px;
+  }
+
+  .cr-about-heading__text {
+    font-size: 38px;
+    line-height: 56px;
+  }
+
+  .cr-partner {
+    top: 660px;
+    width: 600px;
+  }
+
+  .cr-partner__text {
+    font-size: 24px;
+    line-height: 29px;
+  }
+
+  .cr-carousel {
+    top: 940px;
+    width: 800px;
+    height: 22px;
+  }
+
+  .cr-carousel__logo {
+    height: 22px;
+  }
+
+  .cr-shape-morph {
+    width: 800px;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .cr-paragraph__text {
+    font-size: 24px;
+    line-height: 29px;
+    max-width: 520px;
+  }
+
+  /* ── CTA ──────────────────────────────────────────────────────────────── */
+  .cta__label {
+    top: 110px;
+    font-size: 48px;
+    letter-spacing: 0.02em;
+  }
+
+  .cta__headings {
+    top: 231px;
+    gap: 14px;
+  }
+
+  .cta__line {
+    font-size: 48px;
+    line-height: 1.15;
+  }
+
+  .cta__sparkles {
+    top: 610px;
+    gap: 72px;
+  }
+
+  .cta__hoy {
+    font-size: 80px;
+    line-height: 1;
+    letter-spacing: 0.14em;
+  }
+
+  .cta__button {
+    width: 256px;
+    height: 60px;
+    font-size: 17px;
+    padding: 16px 40px;
+    letter-spacing: 1.8px;
+  }
+
+  .cta__logo {
+    top: 890px;
+    width: 340px;
+  }
+}
+
+/* ==========================================================================
+   DESKTOP — min-width: 1440px
+   Max-width wrapper (1200px), center content, final typography scale
+   ========================================================================== */
+
+@media (min-width: 1440px) {
+
+  /* ── Token overrides ─────────────────────────────────────────────────── */
+  :root {
+    --bx-section-width:    1000px;
+    --bx-section-height:   1080px;
+    --bx-padding-x:        60px;
+    --bx-content-width:    880px;     /* 1000 - 60*2 */
+    --bx-header-top:       100px;
+    --bx-theater-top:      270px;
+    --bx-theater-height:   620px;
+    --bx-footer-top:       920px;
+  }
+
+  /* ── Base typography ─────────────────────────────────────────────────── */
+  h1 { font-size: 3.5rem; }          /* 56px */
+  h2 { font-size: 2.5rem; }          /* 40px */
+  h3 { font-size: 2rem; }            /* 32px */
+  p  { font-size: 1.0625rem; }       /* 17px */
+
+  /* ── Max-width wrapper — centers all sections on wide viewports ─────── */
+  .bx-section {
+    display: flex;
+    justify-content: center;
+  }
+
+  .bx-section > * {
+    max-width: 1200px;
+  }
+
+  /* ── Layout ──────────────────────────────────────────────────────────── */
+  .bx-canvas-area {
+    height: 620px;
+  }
+
+  /* ── Hero ─────────────────────────────────────────────────────────────── */
+  .hero__logo {
+    top: 100px;
+    height: 130px;
+  }
+
+  .hero__heading {
+    top: 310px;
+    font-size: 56px;
+    line-height: 64px;
+    letter-spacing: -1.12px;
+    padding: 0 60px;
+  }
+
+  .hero__subtext {
+    top: 620px;
+    width: 520px;
+    font-size: 34px;
+    line-height: 38px;
+  }
+
+  .hero__counters {
+    top: 760px;
+    width: 700px;
+    gap: 120px;
+  }
+
+  .hero__counter-value {
+    font-size: 56px;
+    line-height: 56px;
+  }
+
+  .hero__counter-label {
+    font-size: 24px;
+    letter-spacing: 2.4px;
+  }
+
+  .hero__tags {
+    top: 910px;
+    width: 560px;
+    gap: 16px 48px;
+  }
+
+  .hero__tag {
+    font-size: 18px;
+    letter-spacing: 1.8px;
+    padding: 10px 0;
+  }
+
+  /* ── Imaginemos (single pinned section) ─────────────────────────────── */
+  .imag-city-grid {
+    top: 580px;
+    width: 1010px;
+    height: 520px;
+  }
+
+  /* ── Shared heading final scale ──────────────────────────────────────── */
+  .imag-heading,
+  .ar-heading,
+  .he-heading,
+  .ua-heading,
+  .uf-heading,
+  .cr-heading {
+    font-size: 56px;
+    line-height: 60px;
+  }
+
+  .imag-label,
+  .ar-label,
+  .he-label,
+  .ua-label,
+  .uf-label,
+  .cr-label {
+    font-size: 18px;
+    letter-spacing: 2.5px;
+  }
+
+  /* ── Adiós Riesgos ──────────────────────────────────────────────────── */
+  .ar-shape-morph {
+    width: 100%;
+  }
+
+  .ar-paragraph__text {
+    font-size: 26px;
+    line-height: 32px;
+    max-width: 880px;
+  }
+
+  /* ── Hola Eficiencia ─────────────────────────────────────────────────── */
+  .he-dots {
+    width: 1000px;
+  }
+
+  .he-content {
+    left: 60px;
+    width: 880px;
+    height: 720px;
+    gap: 56px;
+  }
+
+  .he-metric {
+    width: 880px;
+  }
+
+  .he-metric__title {
+    font-size: 42px;
+    line-height: 46px;
+    letter-spacing: 2.1px;
+  }
+
+  .he-metric__body {
+    font-size: 30px;
+    line-height: 34px;
+    letter-spacing: 1.8px;
+  }
+
+  /* ── Upgrade Desde Adentro ───────────────────────────────────────────── */
+  .ua-dots {
+    width: 1000px;
+  }
+
+  .ua-shape-morph {
+    top: 210px;
+    width: 1000px;
+  }
+
+  .ua-paragraph__text {
+    font-size: 26px;
+    line-height: 32px;
+    max-width: 880px;
+  }
+
+  /* ── Upgrade Hacia Afuera ────────────────────────────────────────────── */
+  .uf-dots {
+    width: 1000px;
+  }
+
+  .uf-shape-morph {
+    top: 210px;
+    width: 1000px;
+  }
+
+  .uf-paragraph__text {
+    font-size: 26px;
+    line-height: 32px;
+    max-width: 880px;
+  }
+
+  /* ── Credenciales ────────────────────────────────────────────────────── */
+  .cr-logo__img {
+    width: 500px;
+  }
+
+  .cr-about-heading {
+    top: 280px;
+    width: 560px;
+  }
+
+  .cr-about-heading__text {
+    font-size: 42px;
+    line-height: 62px;
+  }
+
+  .cr-partner {
+    top: 680px;
+    width: 700px;
+  }
+
+  .cr-partner__text {
+    font-size: 26px;
+    line-height: 32px;
+  }
+
+  .cr-carousel {
+    top: 960px;
+    width: 1000px;
+    height: 24px;
+  }
+
+  .cr-carousel__logo {
+    height: 24px;
+  }
+
+  .cr-shape-morph {
+    width: 1000px;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .cr-paragraph__text {
+    font-size: 26px;
+    line-height: 32px;
+    max-width: 600px;
+  }
+
+  /* ── CTA ──────────────────────────────────────────────────────────────── */
+  .cta__label {
+    top: 120px;
+    font-size: 56px;
+    letter-spacing: 0.02em;
+  }
+
+  .cta__headings {
+    top: 261px;
+    gap: 16px;
+  }
+
+  .cta__line {
+    font-size: 56px;
+    line-height: 1.15;
+  }
+
+  .cta__sparkles {
+    top: 650px;
+    gap: 80px;
+  }
+
+  .cta__hoy {
+    font-size: 96px;
+    line-height: 1;
+    letter-spacing: 0.14em;
+  }
+
+  .cta__button {
+    width: 276px;
+    height: 64px;
+    font-size: 18px;
+    padding: 18px 44px;
+    letter-spacing: 2px;
+  }
+
+  .cta__logo {
+    top: 940px;
+    width: 380px;
+  }
+}

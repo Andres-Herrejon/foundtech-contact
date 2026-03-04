@@ -1,0 +1,15 @@
+.bx-hscroll {
+  position: relative;
+  overflow: hidden;
+  width: var(--bx-content-width);
+}
+.bx-hscroll__track {
+  display: flex;
+  flex-wrap: nowrap;
+  will-change: transform;
+}
+.bx-hscroll__page {
+  flex: 0 0 100%;
+  width: 100%;
+  min-width: 0;
+}

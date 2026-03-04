@@ -1,0 +1,176 @@
+/* ==========================================================================
+   cta.css — CTA / Cierre Section (Screen 21)
+   Bexalta V2 | Foundtech
+   Mobile-first 390px — Figma node 49:2
+   ========================================================================== */
+
+/* ---------- CTA wrapper — fills section, centers in viewport ---------- */
+.cta {
+  position: relative;
+  width: 100%;
+  height: var(--bx-section-height);
+  max-width: var(--bx-section-width);
+  margin: 0 auto;
+}
+
+/* ---------- Opening label: "Nosotros creemos" ---------- */
+.cta__label {
+  position: absolute;
+  top: 80px;
+  left: 0;
+  width: 100%;
+  padding: 0 var(--bx-padding-x);
+  font-family: var(--bx-font);
+  font-weight: var(--bx-weight-light);
+  font-size: 36px;
+  line-height: 1.15;
+  color: var(--bx-primary);
+  text-align: center;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+/* ---------- Stacked heading lines ---------- */
+.cta__headings {
+  position: absolute;
+  top: 171px;
+  left: 0;
+  width: 100%;
+  padding: 0 var(--bx-padding-x);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.cta__line {
+  font-family: var(--bx-font);
+  font-weight: var(--bx-weight-light);
+  font-size: 36px;
+  line-height: 1.15;
+  color: #c7c6c6;
+  text-align: center;
+  letter-spacing: 0.02em;
+}
+
+.cta__line strong {
+  font-weight: var(--bx-weight-bold);
+}
+
+/* ---------- Sparkles area: "HOY" + CTA button ---------- */
+.cta__sparkles {
+  position: absolute;
+  top: 470px;
+  left: 0;
+  width: 100%;
+  padding: 0 var(--bx-padding-x);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 56px;
+}
+
+.cta__hoy {
+  font-family: var(--bx-font);
+  font-weight: var(--bx-weight-light);
+  font-size: 64px;
+  line-height: 1;
+  color: #c7c6c6;
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  padding-left: 0.12em;             /* compensate trailing letter-spacing for optical center */
+  width: var(--bx-content-width);
+}
+
+.cta__button {
+  --_border-w: 2px;
+  position: relative;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 200px;
+  height: 48px;
+  padding: 12px 28px;
+  background: var(--bx-bg);
+  border: none;
+  border-radius: var(--bx-radius-pill);
+  cursor: pointer;
+  font-family: var(--bx-font);
+  font-weight: var(--bx-weight-bold);
+  font-size: 14px;
+  line-height: normal;
+  color: var(--bx-primary);
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  text-decoration: none;
+  box-shadow: 0 0 16px rgba(var(--bx-primary-rgb), 0.2);
+  --bx-cta-angle: 0deg;
+  animation: bx-cta-rotate 4s linear infinite;
+  overflow: hidden;
+  isolation: isolate;
+  transition:
+    box-shadow var(--bx-duration-normal) var(--bx-ease-default),
+    color var(--bx-duration-normal) var(--bx-ease-default),
+    transform var(--bx-duration-normal) var(--bx-ease-default);
+}
+
+/* Animated conic-gradient border via pseudo-element */
+.cta__button::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: var(--_border-w);
+  background: conic-gradient(
+    from var(--bx-cta-angle),
+    var(--bx-primary),
+    transparent 40%,
+    var(--bx-primary-bright),
+    transparent 80%,
+    var(--bx-primary)
+  );
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+  z-index: -1;
+}
+
+@keyframes bx-cta-rotate {
+  to { --bx-cta-angle: 360deg; }
+}
+
+.cta__button:hover,
+.cta__button:focus-visible {
+  color: var(--bx-primary-bright);
+  box-shadow: 0 0 28px rgba(var(--bx-primary-bright-rgb), 0.35);
+  transform: scale(1.04);
+}
+
+.cta__button:focus-visible {
+  outline: 2px solid var(--bx-primary);
+  outline-offset: 4px;
+}
+
+/* ---------- Foundtech logo ---------- */
+.cta__logo {
+  position: absolute;
+  top: 720px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 248px;
+  height: 62px;
+}
+
+.cta__logo img {
+  width: 100%;
+  height: auto;
+  display: block;
+}

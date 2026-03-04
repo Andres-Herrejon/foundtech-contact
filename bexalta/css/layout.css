@@ -1,0 +1,153 @@
+/* ==========================================================================
+   layout.css — Structural layout primitives
+   Bexalta V2 | Foundtech
+   Mobile-first (390px) — references tokens.css custom properties
+   ========================================================================== */
+
+/* ---------- Section (full-screen scroll unit) ---------- */
+.bx-section {
+  position: relative;
+  width: 100%;
+  min-height: var(--bx-section-height);
+  overflow: hidden;
+}
+
+/* Hero needs overflow visible for ScrollTrigger pin */
+#hero.bx-section {
+  overflow: visible;
+}
+
+/* Imaginemos needs overflow visible for ScrollTrigger pin */
+#imaginemos.bx-section {
+  overflow: visible;
+}
+
+/* Hola Eficiencia needs overflow visible for ScrollTrigger pin */
+#hola-eficiencia.bx-section {
+  overflow: visible;
+}
+
+/* ---------- Container (content constrained) ---------- */
+.bx-container {
+  position: relative;
+  max-width: var(--bx-section-width);
+  margin: 0 auto;
+  padding: 0 var(--bx-padding-x);
+}
+
+/* ---------- Canvas area (standard Three.js / particle slot) ---------- */
+.bx-canvas-area {
+  position: relative;
+  width: 100%;
+  height: 472px;
+}
+
+.bx-canvas-area canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* ---------- Section header block ---------- */
+.bx-header {
+  padding-top: 60px;
+}
+
+/* ---------- Bottom paragraph area ---------- */
+.bx-paragraph-bottom {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 0 var(--bx-padding-x) 40px;
+}
+
+/* Flex-end variant (for non-absolute contexts) */
+.bx-paragraph-bottom--flex {
+  position: relative;
+  margin-top: auto;
+  padding: 0 0 40px;
+}
+
+/* ---------- Utility: flex column fill ---------- */
+.bx-flex-col {
+  display: flex;
+  flex-direction: column;
+}
+
+/* ---------- Utility: visually hidden (accessible) ---------- */
+.bx-sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ---------- Sticky header overlay (T1.4) ---------- */
+#bx-header-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 100;
+  pointer-events: none;
+}
+
+/* ---------- Section fade transitions (T1.5) ---------- */
+.bx-section::before,
+.bx-section::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 60px;
+  pointer-events: none;
+  z-index: 10;
+}
+.bx-section::before {
+  top: 0;
+  background: linear-gradient(to bottom, var(--bx-bg), transparent);
+}
+.bx-section::after {
+  bottom: 0;
+  background: linear-gradient(to top, var(--bx-bg), transparent);
+}
+
+/* ---------- Section group crossfade transitions (T2.1) ---------- */
+/* 80px crossfade zone between section groups */
+.bx-section-group-end {
+  position: relative;
+}
+.bx-section-group-end::after {
+  content: '';
+  position: absolute;
+  bottom: -40px;
+  left: 0;
+  width: 100%;
+  height: 80px;
+  background: linear-gradient(
+    to bottom,
+    var(--bx-bg) 0%,
+    transparent 40%,
+    transparent 60%,
+    var(--bx-bg) 100%
+  );
+  z-index: 15;
+  pointer-events: none;
+}
+
+/* Slide + fade combo for pinned→unpinned transitions (max 500ms per ground rules) */
+.bx-section--fade-in {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+}
+.bx-section--fade-in.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}

@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bexalta | Foundtech</title>
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="./assets/favicon.svg">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Bexalta | Foundtech">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="https://www.foundtech.contact/assets/og_image.png">
+  <meta property="og:url" content="https://www.foundtech.contact/">
+  <meta property="og:description" content="Gemelos Digitales para potenciar el portafolio inmobiliario más sólido de Jalisco. Eficiencia operativa, precisión milimétrica y tecnología de clase mundial.">
+
+  <!-- Adobe Fonts — Gotham -->
+  <link rel="stylesheet" href="https://use.typekit.net/mlr8hze.css">
+
+  <!-- Three.js r128 -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+  <!-- GSAP 3.12.5 + ScrollTrigger -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+  <!-- Lenis Smooth Scroll 1.1.18 -->
+  <script src="https://unpkg.com/lenis@1.1.18/dist/lenis.min.js"></script>
+
+  <!-- Local Stylesheets -->
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/horizontal-scroll.css">
+  <link rel="stylesheet" href="css/adios-riesgos.css">
+  <link rel="stylesheet" href="css/credenciales.css">
+  <link rel="stylesheet" href="css/cta.css">
+  <link rel="stylesheet" href="css/hero.css">
+  <link rel="stylesheet" href="css/hola-eficiencia.css">
+  <link rel="stylesheet" href="css/imaginemos.css">
+  <link rel="stylesheet" href="css/responsive.css">
+  <link rel="stylesheet" href="css/upgrade-adentro.css">
+  <link rel="stylesheet" href="css/upgrade-afuera.css">
+</head>
+
+<body>
+
+  <!-- Section: Hero -->
+  <section id="hero" class="bx-section">
+    <div class="hero">
+      <!-- Bexalta logo — particle SVG morph canvas -->
+      <div class="hero__logo bx-logo-svg" aria-hidden="true">
+        <canvas></canvas>
+      </div>
+
+      <!-- Main heading -->
+      <h1 class="hero__heading">
+        30 a&ntilde;os<br>
+        construyendo<br>
+        el portafolio<br>
+        inmobiliario<br>
+        m&aacute;s s&oacute;lido<br>
+        de Jalisco
+      </h1>
+
+      <!-- Subtext -->
+      <p class="hero__subtext">
+        Ahora, un <span class="hero__accent">Gemelo Digital</span><br>
+        <strong>para potenciarlo</strong>
+      </p>
+
+      <!-- Counters -->
+      <div class="hero__counters bx-animated-counter">
+        <div class="hero__counter">
+          <span class="hero__counter-value">137 km<sup>2</sup></span>
+          <span class="hero__counter-label">Rentables</span>
+        </div>
+        <div class="hero__counter">
+          <span class="hero__counter-value">+300</span>
+          <span class="hero__counter-label">Unidades</span>
+        </div>
+      </div>
+
+      <!-- Tags grid -->
+      <div class="hero__tags bx-stagger-tags">
+        <span class="hero__tag hero__tag--active">Habitacional</span>
+        <span class="hero__tag">Oficinas</span>
+        <span class="hero__tag">Comercial</span>
+        <span class="hero__tag hero__tag--active">Industrial</span>
+      </div>
+
+      <!-- Scroll indicator (T1.6) -->
+      <div class="hero__scroll-indicator">
+        <div class="hero__scroll-dot"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section: Imaginemos (pinned — cycles 3 text shapes on scroll) -->
+  <section id="imaginemos" class="bx-section imag-section">
+    <!-- Header -->
+    <div class="imag-header">
+      <h3 class="imag-label">Queremos</h3>
+      <h2 class="imag-heading"><span>Que</span><span>Imagines</span></h2>
+    </div>
+    <!-- Single text morph particle canvas — cycles through 3 texts on scroll -->
+    <div class="bx-text-morph imag-text-morph" aria-hidden="true"
+      data-texts='["VISUALIZAR\nTUS\nACTIVOS","AL\nMISMO\nTIEMPO","EN\nTIEMPO\nREAL"]'>
+      <canvas></canvas>
+    </div>
+    <!-- Single city grid — runs continuously -->
+    <div class="bx-city-grid imag-city-grid" aria-hidden="true">
+      <canvas></canvas>
+    </div>
+  </section>
+
+  <!-- Section: Adios Riesgos (pinned — cycles 3 shapes on scroll) -->
+  <section id="adios-riesgos" class="bx-section ar-section">
+    <!-- Header -->
+    <div class="ar-header">
+      <h3 class="ar-label">ADIOS</h3>
+      <h2 class="ar-heading"><span>Riesgos</span><span>Silenciosos</span></h2>
+    </div>
+    <!-- Stacked widgets from animation-widgets.html (crossfaded by scroll) -->
+    <div class="ar-shape-morph" aria-hidden="true">
+      <div class="ar-shape-layer ar-shape-layer--urgent bx-building-urgentfix">
+        <canvas></canvas>
+      </div>
+      <div class="ar-shape-layer ar-shape-layer--helmet bx-helmet-coin-zoom">
+        <canvas></canvas>
+      </div>
+      <div class="ar-shape-layer ar-shape-layer--sidewalk bx-building-sidewalk">
+        <canvas></canvas>
+      </div>
+    </div>
+    <!-- Paragraph: horizontal scroll with all 3 pages -->
+    <div class="ar-paragraph">
+      <div class="bx-hscroll">
+        <div class="bx-hscroll__track">
+          <div class="bx-hscroll__page">
+            <p class="ar-paragraph__text">Mantenimiento <strong>urgente y reactivo</strong> de aver&iacute;as
+              cr&iacute;ticas con intervenciones de alto impacto en OPEX.</p>
+          </div>
+          <div class="bx-hscroll__page">
+            <p class="ar-paragraph__text">Remodelaciones con <strong>sobre costo presupuestal</strong> por mano de obra
+              adicional para el cumplimiento de fechas. <strong>Afectaciones en alcance, tiempo y costo.</strong></p>
+          </div>
+          <div class="bx-hscroll__page">
+            <p class="ar-paragraph__text"><strong>Intervenciones invasivas no previstas</strong> con el potencial de ser
+              una <strong>sobre carga operativa</strong> de alta magnitud por un volumen inesperado de trabajo.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section: Hola Eficiencia (pinned — synced horizontal scroll metrics) -->
+  <section id="hola-eficiencia" class="bx-section he-section">
+    <!-- Single set of floating dot decorations -->
+    <div class="he-dots">
+      <div class="he-dot he-dot--s8-1"></div>
+      <div class="he-dot he-dot--s8-2"></div>
+      <div class="he-dot he-dot--s8-3"></div>
+      <div class="he-dot he-dot--s8-4"></div>
+      <div class="he-dot he-dot--s8-5"></div>
+    </div>
+    <!-- Header -->
+    <div class="he-header">
+      <h3 class="he-label">HOLA</h3>
+      <h2 class="he-heading"><span>Eficiencia</span><span>Operativa</span></h2>
+    </div>
+    <!-- Content: 3 metric blocks with horizontal-scroll body text -->
+    <div class="he-content">
+      <div class="he-metric">
+        <h2 class="he-metric__title">OPTIMIZA</h2>
+        <div class="bx-hscroll he-metric__scroll">
+          <div class="bx-hscroll__track">
+            <div class="bx-hscroll__page">
+              <p class="he-metric__body">Materiales</p>
+            </div>
+            <div class="bx-hscroll__page">
+              <p class="he-metric__body">Mano de obra</p>
+            </div>
+            <div class="bx-hscroll__page">
+              <p class="he-metric__body">Tiempos</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="he-metric">
+        <h2 class="he-metric__title">INCREMENTA</h2>
+        <div class="bx-hscroll he-metric__scroll">
+          <div class="bx-hscroll__track">
+            <div class="bx-hscroll__page">
+              <p class="he-metric__body"><span class="he-metric__line">Overall</span><span
+                  class="he-metric__line">Equipment</span><span class="he-metric__line">Effectiveness</span></p>
+            </div>
+            <div class="bx-hscroll__page">
+              <p class="he-metric__body"><span class="he-metric__line">First</span><span
+                  class="he-metric__line">Yield</span><span class="he-metric__line">Pass</span></p>
+            </div>
+            <div class="bx-hscroll__page">
+              <p class="he-metric__body"><span class="he-metric__line">Return</span><span
+                  class="he-metric__line">Of</span><span class="he-metric__line">Investment</span></p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="he-metric">
+        <h2 class="he-metric__title">REDUCE</h2>
+        <div class="bx-hscroll he-metric__scroll">
+          <div class="bx-hscroll__track">
+            <div class="bx-hscroll__page">
+              <p class="he-metric__body"><span class="he-metric__line">Ciclo de</span><span
+                  class="he-metric__line">conversi&oacute;n de</span><span class="he-metric__line">efectivo</span></p>
+            </div>
+            <div class="bx-hscroll__page">
+              <p class="he-metric__body"><span class="he-metric__line">Costos</span><span
+                  class="he-metric__line">operativos</span></p>
+            </div>
+            <div class="bx-hscroll__page">
+              <p class="he-metric__body"><span class="he-metric__line">Al menos</span><span class="he-metric__line">15%
+                  en gastos</span><span class="he-metric__line">de mantenimiento</span></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section: Upgrade Adentro (pinned — cycles 3 widgets on scroll) -->
+  <section id="upgrade-adentro-1" class="bx-section ua-section">
+    <!-- Floating dot decorations -->
+    <div class="ua-dots">
+      <div class="ua-dot ua-dot--s11-1"></div>
+      <div class="ua-dot ua-dot--s11-2"></div>
+      <div class="ua-dot ua-dot--s11-3"></div>
+    </div>
+    <!-- Header -->
+    <div class="ua-header">
+      <h3 class="ua-label">UPGRADE</h3>
+      <h2 class="ua-heading"><span>De</span><span>Adentro</span></h2>
+    </div>
+    <!-- Stacked widgets -->
+    <div class="ua-shape-morph" aria-hidden="true">
+      <div class="ua-shape-layer ua-shape-layer--float bx-molecule-float">
+        <canvas></canvas>
+      </div>
+      <div class="ua-shape-layer ua-shape-layer--opacity bx-molecule-opacity-shift">
+        <canvas></canvas>
+      </div>
+      <div class="ua-shape-layer ua-shape-layer--building bx-building-growth">
+        <canvas></canvas>
+      </div>
+    </div>
+    <!-- Paragraph: horizontal scroll with all 3 pages -->
+    <div class="ua-paragraph">
+      <div class="bx-hscroll">
+        <div class="bx-hscroll__track">
+          <div class="bx-hscroll__page">
+            <p class="ua-paragraph__text"><strong>Colaboraci&oacute;n</strong> que incrementa la sinergia
+              exponencialmente.</p>
+            <p class="ua-paragraph__text"><strong>Consolida y organiza toda la informaci&oacute;n</strong> dispersa del
+              portafolio en un solo lugar para las personas indicadas y <strong>ven el estado real</strong> de la
+              superficie rentable.</p>
+          </div>
+          <div class="bx-hscroll__page">
+            <p class="ua-paragraph__text"><strong>Eliminaci&oacute;n de procesos fantasma y prevenci&oacute;n de
+                p&eacute;rdida de conocimiento</strong> sobre la infraestructura cuando personal clave se jubila porque
+              <strong>la informaci&oacute;n del activo reside en el modelo digital</strong> y no solo en la memoria de
+              los operadores</p>
+          </div>
+          <div class="bx-hscroll__page">
+            <p class="ua-paragraph__text"><strong>Los operadores</strong> que implementan gemelos digitales no solo
+              reducen costos, <strong>se convierten en una capacidad que acelera el valor</strong> de cada activo
+              gestionado</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section: Upgrade Hacia Afuera (single pinned, 3 crossfading layers) -->
+  <section id="upgrade-afuera-1" class="bx-section uf-section">
+    <!-- Fixed header (JS-driven fade via initFixedHeaderFade) -->
+    <div class="uf-header">
+      <h3 class="uf-label">UPGRADE</h3>
+      <h2 class="uf-heading"><span>Hacia</span><span>Afuera</span></h2>
+    </div>
+    <!-- Floating dot decorations -->
+    <div class="uf-dots">
+      <div class="uf-dot uf-dot--1"></div>
+      <div class="uf-dot uf-dot--2"></div>
+      <div class="uf-dot uf-dot--3"></div>
+    </div>
+    <!-- Stacked widget layers (crossfade via JS) -->
+    <div class="uf-shape-morph" aria-hidden="true">
+      <div class="uf-shape-layer uf-shape-layer--seq1 bx-image-sequence" data-folder="./sequence/gliding_field/">
+        <canvas></canvas>
+      </div>
+      <div class="uf-shape-layer uf-shape-layer--seq2 bx-image-sequence" data-folder="./sequence/audi/">
+        <canvas></canvas>
+      </div>
+      <div class="uf-shape-layer uf-shape-layer--wcs bx-warehouse-coin-space">
+        <canvas></canvas>
+      </div>
+    </div>
+    <!-- Paragraph: horizontal scroll with 3 text pages -->
+    <div class="uf-paragraph">
+      <div class="bx-hscroll">
+        <div class="bx-hscroll__track">
+          <div class="bx-hscroll__page">
+            <p class="uf-paragraph__text">Crea una <strong>experiencia de cliente</strong> a empresas de primer nivel que
+              buscan integrarse digitalmente y que tienen estrictos est&aacute;ndares internacionales <strong>con lo
+                &uacute;ltimo en tecnolog&iacute;a</strong> y con transparencia total desde el primer contacto y que
+              terminan en transacciones con <strong>altos puntajes en el CSAT.</strong></p>
+          </div>
+          <div class="bx-hscroll__page">
+            <p class="uf-paragraph__text">Con un gemelo digital ofreces <strong>30% m&aacute;s aprovechamiento de
+                espacio</strong> a tus clientes con simuladores de almac&eacute;n basados en scans de precisi&oacute;n
+              milim&eacute;trica y proteges su uptime que mantiene su operaci&oacute;n sostenible.</p>
+          </div>
+          <div class="bx-hscroll__page">
+            <p class="uf-paragraph__text"><strong>La seguridad que inspira y el valor que agrega</strong> un gemelo
+              digital propicia fidelidad y largas relaciones comerciales que <strong>activan tu NPS y fortalece el Brand
+                Equity.</strong></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section: Credenciales (single pinned, intro + 3 crossfading layers) -->
+  <section id="credenciales" class="bx-section cr-section">
+    <!-- Fixed headers (one per canvas layer, crossfaded by JS) -->
+    <div class="cr-header cr-header--1">
+      <h3 class="cr-label">TECNOLOG&Iacute;A</h3>
+      <h2 class="cr-heading"><span>Precisi&oacute;n</span><span>Milim&eacute;trica</span></h2>
+    </div>
+    <div class="cr-header cr-header--2">
+      <h3 class="cr-label">A LA MEDIDA</h3>
+      <h2 class="cr-heading"><span>Proyectos</span><span>Lean</span></h2>
+    </div>
+    <div class="cr-header cr-header--3">
+      <h3 class="cr-label">EXPERTISE</h3>
+      <h2 class="cr-heading"><span>Experiencia</span><span>Comprobada</span></h2>
+    </div>
+    <!-- Intro overlay (staggered reveal on scroll, then fades out for canvases) -->
+    <div class="cr-intro">
+      <div class="cr-logo">
+        <img src="./assets/foundtech-logo.png" alt="Foundtech" class="cr-logo__img">
+      </div>
+      <div class="cr-about-heading">
+        <p class="cr-about-heading__text">Apostamos por la automatizaci&oacute;n tecnol&oacute;gica para la
+          maximizaci&oacute;n de valor de los negocios</p>
+      </div>
+      <div class="cr-partner">
+        <p class="cr-partner__text">En <strong>Foundtech</strong> hemos trabajado con <strong>l&iacute;deres en la
+            industria</strong>. Pero lo que nos hace diferentes no es la tecnolog&iacute;a. Es que entendemos que
+          <strong>un Gemelo Digital para Bexalta</strong> no es un proyecto de IT. Es un instrumento de <strong>mejora
+            continua</strong>.</p>
+      </div>
+      <div class="cr-carousel bx-logo-carousel">
+        <div class="cr-carousel__track">
+          <img src="./assets/logo-dhl.png" alt="DHL" class="cr-carousel__logo">
+          <img src="./assets/logo-nestle.png" alt="Nestl&eacute;" class="cr-carousel__logo">
+          <img src="./assets/logo-roche.png" alt="Roche" class="cr-carousel__logo">
+          <img src="./assets/logo-google.png" alt="Google" class="cr-carousel__logo">
+          <img src="./assets/logo-zurich-airport.png" alt="Zurich Airport" class="cr-carousel__logo">
+          <img src="./assets/logo-dupont.png" alt="DuPont" class="cr-carousel__logo">
+          <!-- Duplicate set for infinite scroll -->
+          <img src="./assets/logo-dhl.png" alt="DHL" class="cr-carousel__logo">
+          <img src="./assets/logo-nestle.png" alt="Nestl&eacute;" class="cr-carousel__logo">
+          <img src="./assets/logo-roche.png" alt="Roche" class="cr-carousel__logo">
+          <img src="./assets/logo-google.png" alt="Google" class="cr-carousel__logo">
+          <img src="./assets/logo-zurich-airport.png" alt="Zurich Airport" class="cr-carousel__logo">
+          <img src="./assets/logo-dupont.png" alt="DuPont" class="cr-carousel__logo">
+        </div>
+      </div>
+    </div>
+    <!-- Stacked canvas layers (crossfade via JS opacity) -->
+    <div class="cr-shape-morph" aria-hidden="true">
+      <div class="cr-shape-layer cr-shape-layer--seq1 bx-image-sequence" data-folder="./sequence/real_building_01/" data-frame-count="127" data-pad="4" data-start-index="1">
+        <canvas></canvas>
+      </div>
+      <div class="cr-shape-layer cr-shape-layer--seq2 bx-image-sequence" data-folder="./sequence/real_building_02/" data-frame-count="113" data-pad="4" data-start-index="1">
+        <canvas></canvas>
+      </div>
+      <div class="cr-shape-layer cr-shape-layer--wave bx-wave-theater">
+        <canvas></canvas>
+      </div>
+    </div>
+    <!-- Paragraph: horizontal scroll with 3 text pages -->
+    <div class="cr-paragraph">
+      <div class="bx-hscroll">
+        <div class="bx-hscroll__track">
+          <div class="bx-hscroll__page">
+            <p class="cr-paragraph__text">Est&aacute;ndares de <strong>clase mundial</strong> en cada punto cr&iacute;tico
+              de creaci&oacute;n de Gemelos Digitales con la <strong>precisi&oacute;n y velocidad</strong> que la
+              Industria 4.0 demanda.</p>
+          </div>
+          <div class="bx-hscroll__page">
+            <p class="cr-paragraph__text">Uso eficiente de la tecnolog&iacute;a adecuado a las necesidades de
+              <strong>Bexalta</strong>. La tecnolog&iacute;a sirve al negocio, nunca al rev&eacute;s.</p>
+          </div>
+          <div class="bx-hscroll__page">
+            <p class="cr-paragraph__text">M&aacute;s de <strong>10 millones de m&sup2; modelados</strong> en m&aacute;s de
+              200 proyectos en Europa y Am&eacute;rica colaborando en <strong>industrias clave</strong>, y gesti&oacute;n
+              de activos para <strong>conservaci&oacute;n patrimonial</strong>.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section: CTA -->
+  <section id="cta" class="bx-section">
+    <div class="cta">
+      <!-- Opening label -->
+      <p class="cta__label">Nosotros creemos</p>
+
+      <!-- Stacked heading lines -->
+      <div class="cta__headings">
+        <p class="cta__line">Que un futuro</p>
+        <p class="cta__line">digital, eficiente</p>
+        <p class="cta__line">y sostenible</p>
+        <p class="cta__line">para <strong>Bexalta</strong></p>
+        <p class="cta__line">puede comenzar</p>
+      </div>
+
+      <!-- Sparkles area: HOY + CTA button -->
+      <div class="cta__sparkles bx-cta-sparkles">
+        <p class="cta__hoy">HOY</p>
+        <a href="https://wa.me/528717272585?text=Hola%2C%20recib%C3%AD%20la%20informaci%C3%B3n%20acerca%20de%20Gemelos%20Digitales%20que%20hicieron%20llegar%20a%20Bexalta%20y%20me%20gustar%C3%ADa%20agendar%20una%20conversaci%C3%B3n%201%20a%201%20con%20el%20equipo%20de%20Foundtech"
+           class="cta__button"
+           target="_blank"
+           rel="noopener noreferrer">COMUN&Iacute;CATE</a>
+      </div>
+
+      <!-- Foundtech logo -->
+      <div class="cta__logo">
+        <img src="./assets/logo_foundtech_whitegreen.svg" alt="Foundtech" />
+      </div>
+    </div>
+  </section>
+
+
+  <!-- Local Scripts -->
+  <script src="js/motion-prefs.js"></script>
+  <script src="js/particle-core.js"></script>
+  <script src="js/particle-transitions.js"></script>
+  <script src="js/widget-observer.js"></script>
+  <script src="js/horizontal-scroll.js"></script>
+  <script src="js/ambient-shell.js"></script>
+
+
+  <script src="js/adios-riesgos-animations.js"></script>
+  <script src="js/credenciales-animations.js?v=2"></script>
+  <script src="js/cta-animations.js"></script>
+  <script src="js/hero-animations.js"></script>
+  <script src="js/hola-eficiencia-animations.js"></script>
+  <script src="js/imaginemos-animations.js"></script>
+  <script src="js/upgrade-adentro-animations.js"></script>
+  <script src="js/upgrade-afuera-animations.js"></script>
+  <script src="js/smooth-scroll.js"></script>
+  <script src="js/app.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,132 @@
+/* ==========================================================================
+   upgrade-adentro.css — Upgrade Desde Adentro (single pinned section)
+   Bexalta V2 | Foundtech
+   ========================================================================== */
+
+.ua-section {
+  background-color: #050505;
+  position: relative;
+  overflow: visible;
+}
+
+.ua-header {
+  position: fixed;
+  top: var(--bx-header-top);
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(100%, var(--bx-section-width));
+  box-sizing: border-box;
+  padding: 0 var(--bx-padding-x);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  z-index: 2;
+}
+
+.ua-label {
+  font-family: var(--bx-font);
+  font-weight: var(--bx-weight-bold);
+  font-size: 16px;
+  line-height: 1;
+  letter-spacing: 1.65px;
+  text-transform: uppercase;
+  color: #c7c6c6;
+  margin: 0;
+}
+
+.ua-heading {
+  font-family: var(--bx-font);
+  font-weight: var(--bx-weight-light);
+  font-size: 36px;
+  line-height: 39.6px;
+  color: var(--bx-primary);
+  margin: 0;
+}
+
+.ua-heading span {
+  display: block;
+}
+
+.ua-dots {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 390px;
+  height: 844px;
+  pointer-events: none;
+  z-index: 1;
+  display: none;
+}
+
+.ua-dot {
+  position: absolute;
+  background-color: var(--bx-primary);
+  border-radius: 50%;
+}
+
+.ua-dot--s11-1 { left: 31.2px; top: 168.8px; width: 3px; height: 3px; opacity: 0.12; }
+.ua-dot--s11-2 { left: 349px; top: 379.8px; width: 2px; height: 2px; opacity: 0.08; }
+.ua-dot--s11-3 { left: 46.8px; top: 629px; width: 4px; height: 4px; opacity: 0.10; }
+
+.ua-dot--s12-1 { left: 356.8px; top: 211px; width: 2px; height: 2px; opacity: 0.10; }
+.ua-dot--s12-2 { left: 23.4px; top: 422px; width: 3px; height: 3px; opacity: 0.08; }
+.ua-dot--s12-3 { left: 327.5px; top: 671.2px; width: 4px; height: 4px; opacity: 0.12; }
+
+.ua-dot--s13-1 { left: 39px; top: 151.92px; width: 3px; height: 3px; opacity: 0.10; }
+.ua-dot--s13-2 { left: 364.6px; top: 337.6px; width: 2px; height: 2px; opacity: 0.08; }
+.ua-dot--s13-3 { left: 31.2px; top: 654.33px; width: 4px; height: 4px; opacity: 0.12; }
+
+.ua-shape-morph {
+  position: absolute;
+  top: 140px;                       /* raised ~47px vs global token for breathing room */
+  left: 0;
+  width: 100%;
+  height: var(--bx-theater-height);
+  z-index: 1;
+}
+
+.ua-shape-layer {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.ua-shape-layer canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.ua-paragraph {
+  position: absolute;
+  bottom: 80px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: var(--bx-section-width);
+  padding: 0 var(--bx-padding-x);
+  z-index: 20;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.ua-paragraph__text {
+  font-family: var(--bx-font);
+  font-weight: var(--bx-weight-body);
+  font-size: 18px;
+  line-height: 21px;
+  color: #c7c6c6;
+  margin: 0;
+  max-width: 328px;
+}
+
+.ua-paragraph__text + .ua-paragraph__text {
+  margin-top: 12px;
+}
+
+.ua-paragraph__text strong {
+  color: var(--bx-primary);
+  font-weight: var(--bx-weight-body);
+}

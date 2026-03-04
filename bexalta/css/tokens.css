@@ -1,0 +1,85 @@
+/* ============================================================
+   BEXALTA V2 — Design Tokens
+   Source: Figma (Page 1) + Foundtech Branding Guidelines
+   ============================================================ */
+
+/* ── @property for animated CTA border angle ─────────────── */
+@property --bx-cta-angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+
+:root {
+  /* ── Colors ─────────────────────────────────────────────── */
+  --bx-primary:          #a2c62e;
+  --bx-primary-bright:   #d4ff60;
+  --bx-bg:               #050508;
+  --bx-surface:          #0c0c10;
+  --bx-elevated:         #141418;
+  --bx-text:             #f0f0f0;
+  --bx-text2:            #a0a0a0;
+  --bx-muted:            #555555;
+  --bx-danger:           #CE5476;
+
+  /* ── RGB Variants (for rgba() usage) ───────────────────── */
+  --bx-primary-rgb:          162, 198, 46;
+  --bx-primary-bright-rgb:   212, 255, 96;
+  --bx-bg-rgb:               5, 5, 8;
+  --bx-surface-rgb:          12, 12, 16;
+  --bx-elevated-rgb:         20, 20, 24;
+  --bx-text-rgb:             240, 240, 240;
+  --bx-text2-rgb:            160, 160, 160;
+  --bx-muted-rgb:            85, 85, 85;
+  --bx-danger-rgb:           206, 84, 118;
+
+  /* ── Typography ─────────────────────────────────────────── */
+  --bx-font:             gotham, 'Helvetica Neue', Arial, sans-serif;
+  --bx-weight-light:     300;
+  --bx-weight-book:      400;
+  --bx-weight-body:      var(--bx-weight-book);
+  --bx-weight-medium:    500;
+  --bx-weight-bold:      700;
+
+  /* ── Spacing & Layout ───────────────────────────────────── */
+  --bx-padding-x:        28px;
+  --bx-section-width:    390px;
+  --bx-section-height:   844px;
+  --bx-content-width:    334px;   /* 390 - 28*2 */
+
+  /* ── Section Zones (from Figma vertical layout) ─────────── */
+  --bx-header-top:       60px;    /* header/label Y offset   */
+  --bx-theater-top:      187px;   /* main visual area start  */
+  --bx-theater-height:   472px;   /* main visual area height */
+  --bx-footer-top:       684px;   /* paragraph/caption zone (≥24px below theater bottom) */
+
+  /* ── Radii & Effects ────────────────────────────────────── */
+  --bx-radius-sm:        4px;
+  --bx-radius-md:        8px;
+  --bx-radius-lg:        16px;
+  --bx-radius-pill:      9999px;
+
+  /* ── Transitions ────────────────────────────────────────── */
+  --bx-ease-default:     cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --bx-duration-fast:    150ms;
+  --bx-duration-normal:  300ms;
+  --bx-duration-slow:    600ms;
+
+  /* ── Reveal Transitions ────────────────────────────────── */
+  --bx-reveal-duration: 0.8s;
+  --bx-reveal-stagger: 0.12s;
+  --bx-reveal-ease: cubic-bezier(0.16, 1, 0.3, 1); /* power4.out equivalent */
+  --bx-fade-duration: 0.5s;
+  --bx-slide-distance: 24px;
+
+  /* ── 8px Grid Spacing Scale ────────────────────────────── */
+  --bx-space-1:          8px;
+  --bx-space-2:          16px;
+  --bx-space-3:          24px;
+  --bx-space-4:          32px;
+  --bx-space-5:          40px;
+  --bx-space-6:          48px;
+  --bx-space-8:          64px;
+  --bx-space-10:         80px;
+  --bx-space-12:         96px;
+}

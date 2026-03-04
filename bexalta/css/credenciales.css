@@ -1,0 +1,225 @@
+/* ==========================================================================
+   credenciales.css — Credenciales (single pinned section)
+   Bexalta V2 | Foundtech
+   Mobile-first (390px) — references tokens.css custom properties
+   Pattern: matches Upgrade Afuera — pinned + intro stagger + crossfade layers
+   ========================================================================== */
+
+/* ---------- Section background ---------- */
+.cr-section {
+  background-color: #050505;
+  position: relative;
+  overflow: visible;
+}
+
+/* ==========================================================================
+   INTRO OVERLAY — Foundtech logo, heading, partner text, carousel
+   Staggered fade-in on scroll, then fades out for canvas layers
+   ========================================================================== */
+
+.cr-intro {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+}
+
+/* Foundtech logo */
+.cr-logo {
+  position: absolute;
+  top: var(--bx-header-top);             /* 60px */
+  left: 0;
+  width: 100%;
+  height: 91px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cr-logo__img {
+  width: 326px;
+  height: 75px;
+  object-fit: contain;
+}
+
+/* About heading — centered large text */
+.cr-about-heading {
+  position: absolute;
+  top: 209px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 292px;
+  z-index: 2;
+}
+
+.cr-about-heading__text {
+  font-family: var(--bx-font);
+  font-weight: var(--bx-weight-light);
+  font-size: 29px;
+  line-height: 45px;
+  color: #c7c6c6;
+  text-align: center;
+  margin: 0;
+}
+
+/* Partner paragraph */
+.cr-partner {
+  position: absolute;
+  top: 554px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 334px;
+  z-index: 2;
+}
+
+.cr-partner__text {
+  font-family: var(--bx-font);
+  font-weight: var(--bx-weight-body);
+  font-size: 18px;
+  line-height: 21.7px;
+  color: #c7c6c6;
+  margin: 0;
+}
+
+.cr-partner__text strong {
+  color: var(--bx-primary);
+  font-weight: var(--bx-weight-body);
+}
+
+/* Logo carousel strip */
+.cr-carousel {
+  position: absolute;
+  top: 775px;
+  left: 0;
+  width: 390px;
+  height: 16px;
+  overflow: hidden;
+  z-index: 2;
+  pointer-events: auto;
+}
+
+.cr-carousel__track {
+  display: flex;
+  align-items: center;
+  gap: 35px;
+  padding-left: 25px;
+  width: max-content;
+  animation: cr-carousel-scroll 25s linear infinite;
+}
+
+.cr-carousel__logo {
+  height: 16px;
+  width: auto;
+  opacity: 0.5;
+  flex-shrink: 0;
+}
+
+@keyframes cr-carousel-scroll {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+/* ==========================================================================
+   STACKED CANVAS LAYERS — crossfade via JS opacity
+   Matches Upgrade Afuera (.uf-shape-morph / .uf-shape-layer) pattern
+   ========================================================================== */
+
+.cr-shape-morph {
+  position: absolute;
+  top: 140px;                            /* raised ~47px vs token for breathing room */
+  left: 0;
+  width: 100%;
+  height: var(--bx-theater-height);      /* 472px */
+  z-index: 1;
+}
+
+.cr-shape-layer {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.cr-shape-layer canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+  /* Aspect ratio preserved by JS drawFrameAR (contain/letterbox) */
+}
+
+/* ==========================================================================
+   BOTTOM PARAGRAPH — absolute within pinned section (matches Afuera pattern)
+   ========================================================================== */
+
+.cr-paragraph {
+  position: absolute;
+  bottom: 80px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: var(--bx-section-width);
+  padding: 0 var(--bx-padding-x);
+  z-index: 20;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.cr-paragraph__text {
+  font-family: var(--bx-font);
+  font-weight: var(--bx-weight-body);
+  font-size: 18px;
+  line-height: 21.7px;
+  color: #c7c6c6;
+  margin: 0;
+  max-width: 341px;
+}
+
+.cr-paragraph__text strong {
+  color: var(--bx-primary);
+  font-weight: var(--bx-weight-body);
+}
+
+/* ==========================================================================
+   FIXED HEADERS — one per canvas layer, crossfaded by JS
+   Matches pattern from .uf-header, .ar-header, .imag-header
+   ========================================================================== */
+
+.cr-header {
+  position: fixed;
+  top: var(--bx-header-top);             /* 60px */
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(100%, var(--bx-section-width));
+  box-sizing: border-box;
+  padding: 0 var(--bx-padding-x);        /* 0 28px */
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  z-index: 30;
+  pointer-events: none;
+}
+
+.cr-label {
+  font-family: var(--bx-font);
+  font-weight: var(--bx-weight-bold);
+  font-size: 16px;
+  line-height: 1;
+  letter-spacing: 1.65px;
+  text-transform: uppercase;
+  color: #c7c6c6;
+  margin: 0;
+}
+
+.cr-heading {
+  font-family: var(--bx-font);
+  font-weight: var(--bx-weight-light);
+  font-size: 36px;
+  line-height: 39.6px;
+  color: var(--bx-primary);
+  margin: 0;
+}
+
+.cr-heading span {
+  display: block;
+}
