@@ -142,6 +142,26 @@
     /* 5. Route-change-style reveals between section groups */
     initSectionGroupTransitions();
 
+    /* 6. Global resize → recalculate ScrollTrigger positions (debounced) */
+    var resizeTimer;
+    window.addEventListener('resize', function () {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(function () {
+        if (typeof ScrollTrigger !== 'undefined') {
+          ScrollTrigger.refresh();
+        }
+      }, 200);
+    });
+
+    /* 7. Orientation change → refresh after layout settles */
+    window.addEventListener('orientationchange', function () {
+      setTimeout(function () {
+        if (typeof ScrollTrigger !== 'undefined') {
+          ScrollTrigger.refresh();
+        }
+      }, 200);
+    });
+
     console.log('[Bexalta] All systems initialized');
   });
 })();

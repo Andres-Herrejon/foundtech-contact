@@ -48,7 +48,7 @@
   top: 209px;
   left: 50%;
   transform: translateX(-50%);
-  width: 292px;
+  width: min(80vw, 340px);
   z-index: 2;
 }
 
@@ -68,7 +68,7 @@
   top: 554px;
   left: 50%;
   transform: translateX(-50%);
-  width: 334px;
+  width: var(--bx-content-width);
   z-index: 2;
 }
 
@@ -91,7 +91,7 @@
   position: absolute;
   top: 775px;
   left: 0;
-  width: 390px;
+  width: min(100vw, 430px);
   height: 16px;
   overflow: hidden;
   z-index: 2;
@@ -171,7 +171,7 @@
   line-height: 21.7px;
   color: #c7c6c6;
   margin: 0;
-  max-width: 341px;
+  max-width: var(--bx-content-width);
 }
 
 .cr-paragraph__text strong {

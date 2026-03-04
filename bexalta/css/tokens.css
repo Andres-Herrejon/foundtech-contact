@@ -43,9 +43,9 @@
 
   /* ── Spacing & Layout ───────────────────────────────────── */
   --bx-padding-x:        28px;
-  --bx-section-width:    390px;
+  --bx-section-width:    min(100vw, 430px);
   --bx-section-height:   844px;
-  --bx-content-width:    334px;   /* 390 - 28*2 */
+  --bx-content-width:    calc(min(100vw, 430px) - var(--bx-padding-x) * 2);
 
   /* ── Section Zones (from Figma vertical layout) ─────────── */
   --bx-header-top:       60px;    /* header/label Y offset   */

@@ -77,8 +77,9 @@
 .imag-city-grid {
   position: absolute;
   top: 480px;                             /* anchored so 96% of 380px is within 844px viewport */
-  left: 0;
-  width: 390px;                           /* matched to viewport — was 395px */
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(100vw, 430px);               /* fluid — matched to viewport token */
   height: 380px;
   overflow: hidden;
   z-index: 0;

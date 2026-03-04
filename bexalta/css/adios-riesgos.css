@@ -103,7 +103,7 @@
   line-height: 21px;
   color: #727070;
   margin: 0;
-  max-width: 342px;
+  max-width: var(--bx-content-width);
 }
 
 /* Highlighted (bold) spans within paragraph */

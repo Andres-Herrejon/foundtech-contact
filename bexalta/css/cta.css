@@ -80,7 +80,7 @@
   text-transform: uppercase;
   letter-spacing: 0.12em;
   padding-left: 0.12em;             /* compensate trailing letter-spacing for optical center */
-  width: var(--bx-content-width);
+  width: min(90vw, var(--bx-content-width));
 }
 
 .cta__button {
@@ -90,7 +90,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 200px;
+  width: min(55vw, 200px);
   height: 48px;
   padding: 12px 28px;
   background: var(--bx-bg);
@@ -165,7 +165,7 @@
   top: 720px;
   left: 50%;
   transform: translateX(-50%);
-  width: 248px;
+  width: min(65vw, 248px);
   height: 62px;
 }
 

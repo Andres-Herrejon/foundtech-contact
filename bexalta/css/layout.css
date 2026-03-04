@@ -8,6 +8,7 @@
 .bx-section {
   position: relative;
   width: 100%;
+  max-width: 100vw;
   min-height: var(--bx-section-height);
   overflow: hidden;
 }
@@ -40,6 +41,7 @@
   position: relative;
   width: 100%;
   height: 472px;
+  aspect-ratio: 390 / 472;
 }
 
 .bx-canvas-area canvas {

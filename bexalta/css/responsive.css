@@ -1,7 +1,7 @@
 /* ==========================================================================
    responsive.css — Breakpoint overrides (mobile-first)
    Bexalta V2 | Foundtech
-   Base: 390px  →  768px (tablet)  →  1024px (small desktop)  →  1440px (desktop)
+   Base: fluid (≤430px)  →  768px (tablet)  →  1024px (small desktop)  →  1440px (desktop)
    ========================================================================== */
 
 /* ==========================================================================
@@ -16,7 +16,7 @@
     --bx-section-width:    600px;
     --bx-section-height:   1024px;
     --bx-padding-x:        36px;
-    --bx-content-width:    528px;     /* 600 - 36*2 */
+    --bx-content-width:    calc(600px - 36px * 2);  /* 528px */
     --bx-header-top:       80px;
     --bx-theater-top:      230px;
     --bx-theater-height:   560px;
@@ -95,7 +95,8 @@
   /* ── Imaginemos (single pinned section) ─────────────────────────────── */
   .imag-city-grid {
     top: 530px;
-    left: -5px;
+    left: 50%;
+    transform: translateX(-50%);
     width: 610px;
     height: 460px;
   }
