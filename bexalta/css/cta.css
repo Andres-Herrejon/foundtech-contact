@@ -16,7 +16,7 @@
 /* ---------- Opening label: "Nosotros creemos" ---------- */
 .cta__label {
   position: absolute;
-  top: 80px;
+  top: max(80px, calc(env(safe-area-inset-top, 0px) + 32px));
   left: 0;
   width: 100%;
   padding: 0 var(--bx-padding-x);

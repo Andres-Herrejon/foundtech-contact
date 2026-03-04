@@ -60,10 +60,10 @@
 /* ---------- Text Morph area (center theater) ---------- */
 .imag-text-morph {
   position: absolute;
-  top: var(--bx-theater-top);         /* 187px */
+  top: var(--bx-theater-top);         /* 160px mobile */
   left: 0;
   right: 0;
-  height: var(--bx-theater-height);   /* 472px */
+  height: var(--bx-theater-height);   /* 390px mobile */
   z-index: 1;
 }
 
@@ -76,11 +76,11 @@
 /* ---------- City Grid (near viewport bottom during pin) ---------- */
 .imag-city-grid {
   position: absolute;
-  top: 480px;                             /* anchored so 96% of 380px is within 844px viewport */
+  top: 430px;                             /* below text-morph theater — city grid fits within 844px */
   left: 50%;
   transform: translateX(-50%);
   width: min(100vw, 430px);               /* fluid — matched to viewport token */
-  height: 380px;
+  height: 340px;                          /* scaled down proportionally from 380px */
   overflow: hidden;
   z-index: 0;
 }

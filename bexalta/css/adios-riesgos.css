@@ -85,7 +85,7 @@
 /* ---------- Bottom paragraph (section-absolute, animation-synced) ---------- */
 .ar-paragraph {
   position: absolute;
-  bottom: 40px;
+  top: var(--bx-footer-top);           /* 580px mobile — just below theater */
   left: 50%;
   transform: translateX(-50%);
   width: 100%;
@@ -99,8 +99,8 @@
 .ar-paragraph__text {
   font-family: var(--bx-font);
   font-weight: var(--bx-weight-body);
-  font-size: 18px;
-  line-height: 23px;
+  font-size: 15px;
+  line-height: 20px;
   color: #727070;
   margin: 0;
   max-width: var(--bx-content-width);

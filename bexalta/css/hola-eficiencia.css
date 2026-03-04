@@ -87,15 +87,16 @@
 /* ---------- Content area (centered metrics) ---------- */
 .he-content {
   position: absolute;
-  top: 190px;
-  left: var(--bx-padding-x);
+  top: var(--bx-theater-top);        /* 160px mobile */
+  left: 50%;
+  transform: translateX(-50%);
   width: var(--bx-content-width);
-  height: 552px;
+  height: var(--bx-theater-height);  /* 420px mobile — proportional to theater */
   display: flex;
   flex-direction: column;
-  gap: 40px;
+  gap: 32px;
   justify-content: center;
-  align-items: flex-start;
+  align-items: center;
   z-index: 2;
 }
 
@@ -111,9 +112,9 @@
 .he-metric__title {
   font-family: var(--bx-font);
   font-weight: var(--bx-weight-light);
-  font-size: 29px;
-  line-height: 31.9px;
-  letter-spacing: 1.45px;
+  font-size: 25px;
+  line-height: 28px;
+  letter-spacing: 1.25px;
   text-transform: uppercase;
   text-align: center;
   color: var(--bx-primary);
@@ -131,9 +132,9 @@
 .he-metric__body {
   font-family: var(--bx-font);
   font-weight: var(--bx-weight-body);
-  font-size: 23px;
-  line-height: 23.4px;
-  letter-spacing: 1.44px;
+  font-size: 20px;
+  line-height: 22px;
+  letter-spacing: 1.25px;
   text-align: center;
   color: #c7c6c6;
   margin: 0;

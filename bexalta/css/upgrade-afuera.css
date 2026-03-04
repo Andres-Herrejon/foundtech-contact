@@ -80,10 +80,10 @@
 /* ---------- Stacked widget container (like ua-shape-morph) ---------- */
 .uf-shape-morph {
   position: absolute;
-  top: 140px;                         /* raised ~47px vs global token for breathing room */
+  top: var(--bx-theater-top);         /* follows token — 160px mobile */
   left: 0;
   width: 100%;
-  height: var(--bx-theater-height);   /* 472px */
+  height: var(--bx-theater-height);   /* 390px mobile */
   z-index: 1;
 }
 
@@ -105,7 +105,7 @@
 /* ---------- Bottom paragraph (absolute within pinned section, like Adentro) ---------- */
 .uf-paragraph {
   position: absolute;
-  bottom: 40px;
+  top: var(--bx-footer-top);           /* 580px mobile — just below theater */
   left: 50%;
   transform: translateX(-50%);
   width: 100%;
@@ -119,8 +119,8 @@
 .uf-paragraph__text {
   font-family: var(--bx-font);
   font-weight: var(--bx-weight-body);
-  font-size: 18px;
-  line-height: 23px;
+  font-size: 15px;
+  line-height: 20px;
   color: #c7c6c6;
   margin: 0;
   max-width: var(--bx-content-width);

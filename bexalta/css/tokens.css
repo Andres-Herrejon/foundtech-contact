@@ -49,9 +49,9 @@
 
   /* ── Section Zones (from Figma vertical layout) ─────────── */
   --bx-header-top:       max(60px, calc(env(safe-area-inset-top, 0px) + 12px));    /* header/label Y offset — accounts for notch */
-  --bx-theater-top:      187px;   /* main visual area start  */
-  --bx-theater-height:   472px;   /* main visual area height */
-  --bx-footer-top:       684px;   /* paragraph/caption zone (≥24px below theater bottom) */
+  --bx-theater-top:      160px;   /* main visual area start  */
+  --bx-theater-height:   420px;   /* main visual area height — fits text morph animations */
+  --bx-footer-top:       572px;   /* paragraph/caption zone — 8px higher for full visibility */
 
   /* ── Radii & Effects ────────────────────────────────────── */
   --bx-radius-sm:        4px;

@@ -40,8 +40,8 @@
 .bx-canvas-area {
   position: relative;
   width: 100%;
-  height: 472px;
-  aspect-ratio: 390 / 472;
+  height: var(--bx-theater-height);    /* 420px mobile, scales up via responsive.css */
+  aspect-ratio: 390 / 420;
 }
 
 .bx-canvas-area canvas {
