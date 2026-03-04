@@ -48,7 +48,7 @@
   --bx-content-width:    calc(min(100vw, 430px) - var(--bx-padding-x) * 2);
 
   /* ── Section Zones (from Figma vertical layout) ─────────── */
-  --bx-header-top:       60px;    /* header/label Y offset   */
+  --bx-header-top:       max(60px, calc(env(safe-area-inset-top, 0px) + 12px));    /* header/label Y offset — accounts for notch */
   --bx-theater-top:      187px;   /* main visual area start  */
   --bx-theater-height:   472px;   /* main visual area height */
   --bx-footer-top:       684px;   /* paragraph/caption zone (≥24px below theater bottom) */

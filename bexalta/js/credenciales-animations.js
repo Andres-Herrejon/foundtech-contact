@@ -121,12 +121,10 @@ window.BxCredencialesAnimations = (function () {
     var track = carousel.querySelector('.cr-carousel__track');
     if (!track) return;
 
-    track.style.animationPlayState = 'paused';
-
-    window.__bxObserveWidget(carousel, {
-      startAnim: function () { track.style.animationPlayState = 'running'; },
-      stopAnim:  function () { track.style.animationPlayState = 'paused'; }
-    });
+    /* On short viewports the carousel (top:775px) sits below the fold
+       inside the pinned section, so IntersectionObserver never fires.
+       Start running immediately — the intro stagger handles visibility. */
+    track.style.animationPlayState = 'running';
   }
 
 

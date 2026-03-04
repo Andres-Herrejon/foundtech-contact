@@ -105,7 +105,7 @@
 /* ---------- Bottom paragraph (absolute within pinned section, like Adentro) ---------- */
 .uf-paragraph {
   position: absolute;
-  bottom: 80px;
+  bottom: 40px;
   left: 50%;
   transform: translateX(-50%);
   width: 100%;
@@ -120,7 +120,7 @@
   font-family: var(--bx-font);
   font-weight: var(--bx-weight-body);
   font-size: 18px;
-  line-height: 21px;
+  line-height: 23px;
   color: #c7c6c6;
   margin: 0;
   max-width: var(--bx-content-width);
