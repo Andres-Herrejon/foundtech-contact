@@ -38,26 +38,28 @@
 /* ---------- Main heading ---------- */
 .hero__heading {
   position: absolute;
-  top: 183px;
+  top: clamp(183px, 21.7%, 310px);
   left: 0;
   width: 100%;
   font-weight: var(--bx-weight-light);
   font-size: 36px;
-  line-height: 41.4px;
+  line-height: 1.15;                       /* P3: was 41.4px — unitless ratio (41.4/36) scales with font */
   text-align: center;
   color: #c7c6c6;
   letter-spacing: -0.72px;
+  padding: 0 var(--bx-padding-x);
+  box-sizing: border-box;
 }
 
 /* ---------- Subtext paragraph ---------- */
 .hero__subtext {
   position: absolute;
-  top: 459px;
+  top: clamp(459px, 54.4%, 620px);
   left: 50%;
   transform: translateX(-50%);
-  width: min(88vw, 340px);
+  width: clamp(300px, 88vw, 520px);
   font-size: 23px;
-  line-height: 24px;
+  line-height: 1.04;                       /* P3: was 24px — unitless ratio (24/23) scales with font */
   text-align: center;
   color: #c7c6c6;
   font-weight: var(--bx-weight-body);
@@ -74,26 +76,26 @@
 /* ---------- Counter row (bx-animated-counter) ---------- */
 .hero__counters {
   position: absolute;
-  top: 560px;
+  top: clamp(560px, 66.4%, 760px);
   left: 50%;
   transform: translateX(-50%);
-  width: min(92vw, 380px);
+  width: clamp(340px, 92vw, 700px);
   display: flex;
   justify-content: center;
-  gap: 48px;
+  gap: clamp(48px, 6vw, 120px);
 }
 
 .hero__counter {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 6px;
+  gap: clamp(6px, 0.8vw, 12px);           /* P3: fluid counter gap 6→12px */
 }
 
 .hero__counter-value {
   font-weight: var(--bx-weight-light);
   font-size: 36px;
-  line-height: 36px;
+  line-height: 1;
   color: var(--bx-primary);
   text-align: center;
   letter-spacing: -0.72px;
@@ -101,7 +103,7 @@
 
 .hero__counter-value sup {
   font-size: 16px;
-  line-height: 16px;
+  line-height: 1;                          /* P3: was 16px — unitless matches font-size */
   vertical-align: super;
 }
 
@@ -118,13 +120,13 @@
 /* ---------- Tags grid 2x2 (bx-stagger-tags) ---------- */
 .hero__tags {
   position: absolute;
-  top: 670px;
+  top: clamp(670px, 79.4%, 910px);
   left: 50%;
   transform: translateX(-50%);
-  width: min(85vw, 340px);
+  width: clamp(300px, 85vw, 560px);
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 8px 24px;
+  gap: clamp(8px, 1vw, 12px) clamp(24px, 4vw, 48px);
 }
 
 .hero__tag {
@@ -135,7 +137,7 @@
   text-transform: uppercase;
   letter-spacing: 1.44px;
   color: #727070;
-  padding: 8px 0;
+  padding: clamp(8px, 1vw, 14px) 0;        /* P3: fluid tag padding 8→14px (mobile stays 8px) */
 }
 
 .hero__tag--active {
@@ -145,7 +147,7 @@
 /* ---------- Scroll indicator (T1.6, T2.2) ---------- */
 .hero__scroll-indicator {
   position: absolute;
-  bottom: 32px;
+  bottom: clamp(32px, 4vw, 56px);          /* P3: fluid scroll-indicator offset 32→56px (mobile preserved) */
   left: 50%;
   transform: translateX(-50%);
   width: 24px;

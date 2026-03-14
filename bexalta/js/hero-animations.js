@@ -13,6 +13,116 @@
 window.BxHeroAnimations = (function () {
   'use strict';
 
+  var _particleInst = null;
+  var _logoState = null;
+  var HERO_TARGET_PCT = 0.38;
+  var HERO_LOGO_ASPECT = 296.2 / 106.5;
+
+  function getLogoMetrics(wrapper) {
+    var canvas = wrapper ? wrapper.querySelector('canvas') : null;
+    if (!canvas) return null;
+
+    var parentRect = canvas.parentElement.getBoundingClientRect();
+    var parentW = parentRect.width;
+    var parentH = parentRect.height;
+    if (parentW < 1 || parentH < 1) return null;
+
+    var baseWidth = 390;
+    var fovRad = (55 / 2) * Math.PI / 180;
+    var camZ = 9 * Math.pow(baseWidth / Math.max(parentW, baseWidth), 0.5);
+    camZ = Math.max(camZ, 6);
+
+    var visibleWidth = 2 * camZ * Math.tan(fovRad);
+    var visibleHeight = visibleWidth * (parentH / parentW);
+    var scale = Math.min(3.8, visibleWidth * 0.7);
+    var offY = visibleHeight * 0.5 * 0.35;
+
+    if (window.innerWidth >= 768) {
+      scale = HERO_TARGET_PCT * visibleWidth;
+
+      var heading = document.querySelector('#hero .hero__heading');
+      var headingTopPx = heading ? heading.getBoundingClientRect().top - parentRect.top : parentH * 0.22;
+      var logoWidthPx = parentW * (scale / visibleWidth);
+      var logoHeightPx = logoWidthPx / HERO_LOGO_ASPECT;
+      var gapPx = window.innerWidth >= 1440 ? 36 : window.innerWidth >= 1024 ? 28 : 24;
+      var minTop = window.innerHeight <= 900 ? 32 : 12;
+      var logoTopPx = Math.max(minTop, headingTopPx - gapPx - logoHeightPx);
+      var logoCenterPx = logoTopPx + (logoHeightPx * 0.5);
+
+      // THREE.js PerspectiveCamera uses vertical FOV, so the true frustum
+      // height is 2*camZ*tan(fov/2) — which equals `visibleWidth` above.
+      // Using `visibleHeight` (which multiplies by parentH/parentW) inflates
+      // offY on portrait viewports (e.g. iPad Mini 768x1024) and pushes the
+      // logo above the visible frustum.
+      var frustumH = 2 * camZ * Math.tan(fovRad);
+      offY = ((parentH * 0.5) - logoCenterPx) * (frustumH / parentH);
+    }
+
+    return {
+      camZ: camZ,
+      scale: scale,
+      offY: offY
+    };
+  }
+
+  function offsetChaos(count, radius, offY) {
+    var points = BxParticleCore.generateChaos(count, radius);
+    for (var i = 0; i < points.length; i++) {
+      points[i].y += offY;
+    }
+    return points;
+  }
+
+  function fillPointArray(targetArr, points, count) {
+    for (var i = 0; i < count; i++) {
+      var point = points[i % points.length];
+      targetArr[i * 3] = point.x;
+      targetArr[i * 3 + 1] = point.y;
+      targetArr[i * 3 + 2] = point.z;
+    }
+  }
+
+  async function rebuildLogoTargets(state, chaosRadius) {
+    if (!state || !state.inst || !state.bexaltaSvgText) return;
+
+    var metrics = getLogoMetrics(state.wrapper);
+    if (!metrics) return;
+
+    state.metrics = metrics;
+    if (state.inst.camera) {
+      state.inst.camera.position.z = metrics.camZ;
+    }
+
+    var buildToken = (state.buildToken || 0) + 1;
+    state.buildToken = buildToken;
+
+    try {
+      var bexaltaPoints = await BxParticleCore.parseSVGToPoints(state.bexaltaSvgText, state.n, metrics.scale, 0, metrics.offY);
+      if (!state.inst || state.buildToken !== buildToken) return;
+
+      var foundtechPoints = state.foundtechSvgText
+        ? await BxParticleCore.parseSVGToPoints(state.foundtechSvgText, state.n, metrics.scale, 0, metrics.offY)
+        : bexaltaPoints;
+      if (!state.inst || state.buildToken !== buildToken) return;
+
+      var chaosPoints = offsetChaos(state.n, chaosRadius || 3.0, metrics.offY);
+
+      fillPointArray(state.bexArr, bexaltaPoints, state.n);
+      fillPointArray(state.chaosArr, chaosPoints, state.n);
+      fillPointArray(state.ftArr, foundtechPoints, state.n);
+
+      state.svgDataReady = true;
+      state.applyMorph(state.proxy.morph);
+
+      if (typeof ScrollTrigger !== 'undefined') {
+        ScrollTrigger.refresh();
+      }
+    } catch (err) {
+      console.warn('[BxHero] Logo target rebuild failed:', err);
+      state.svgDataReady = true;
+    }
+  }
+
   /* ── 1. bx-logo-svg ── */
   function initLogoSVG() {
     var wrapper = document.querySelector('#hero .bx-logo-svg');
@@ -21,87 +131,85 @@ window.BxHeroAnimations = (function () {
     if (!canvas || !window.BxParticleCore) return;
 
     var n = 25000;
-    var scale = 3.8; // Scaled down to fit within camera frustum visible width (~4.33 world units at FOV=55, camZ=9)
-    var offY = 3.5; // C1+C2 fix: with full-bleed canvas (844px), offset logo upward to match Figma top:60px position
-    var svgUrl = 'assets/logo_bexalta_white.svg';
+    var metrics = getLogoMetrics(wrapper);
+    if (!metrics) return;
 
-    var inst = BxParticleCore.create(canvas, { count: n });
+    var inst = BxParticleCore.create(canvas, { count: n, camZ: metrics.camZ });
     if (!inst) return;
+    _particleInst = inst;
 
-    // Start with chaos while SVG loads — offset to logo Y position
-    var initialChaos = BxParticleCore.generateChaos(n, 2.5);
-    for (var ic = 0; ic < initialChaos.length; ic++) { initialChaos[ic].y += offY; }
+    var initialChaos = offsetChaos(n, 2.5, metrics.offY);
     inst.setTarget(initialChaos);
     inst.setColor(BxParticleCore.COLORS.white, BxParticleCore.COLORS.primary, 0.15);
 
-    // ── Synchronous ScrollTrigger setup ──
-    // Pin must register NOW so other ScrollTriggers calculate correct offsets.
-    // SVG data fills in asynchronously; applyMorph is a no-op until ready.
-
-    // Pre-allocate flat arrays — filled with initial chaos as placeholder
     var bexArr = new Float32Array(n * 3);
     var chaosArr = new Float32Array(n * 3);
     var ftArr = new Float32Array(n * 3);
-    for (var i = 0; i < n; i++) {
-      var cp = initialChaos[i % initialChaos.length];
-      bexArr[i*3] = cp.x; bexArr[i*3+1] = cp.y; bexArr[i*3+2] = cp.z;
-      chaosArr[i*3] = cp.x; chaosArr[i*3+1] = cp.y; chaosArr[i*3+2] = cp.z;
-      ftArr[i*3] = cp.x; ftArr[i*3+1] = cp.y; ftArr[i*3+2] = cp.z;
-    }
+    fillPointArray(bexArr, initialChaos, n);
+    fillPointArray(chaosArr, initialChaos, n);
+    fillPointArray(ftArr, initialChaos, n);
 
-    var svgDataReady = false;
-
-    // Scroll-driven proxy: morph progress 0→1 maps to full sequence
-    // 0.0 = Bexalta, 0.5 = chaos (scattered), 1.0 = Foundtech
     var proxy = { morph: 0, hold: 0 };
+    var posArr = inst.geo.attributes.position.array;
+    var state = {
+      wrapper: wrapper,
+      n: n,
+      inst: inst,
+      metrics: metrics,
+      bexArr: bexArr,
+      chaosArr: chaosArr,
+      ftArr: ftArr,
+      posArr: posArr,
+      proxy: proxy,
+      svgDataReady: false,
+      bexaltaSvgText: null,
+      foundtechSvgText: null,
+      buildToken: 0,
+      applyMorph: null,
+      timeline: null
+    };
+    _logoState = state;
 
-    // Colors for each phase
     var bexColor = BxParticleCore.COLORS.white;
     var bexAccent = BxParticleCore.COLORS.primary;
     var ftColor = BxParticleCore.COLORS.primary;
     var ftAccent = BxParticleCore.COLORS.white;
 
-    // Direct position interpolation on each scroll update
-    // Writes to BOTH tgt (for render-loop lerp) AND posArr (immediate snap)
-    var posArr = inst.geo.attributes.position.array;
+    state.applyMorph = function (m) {
+      if (!state.svgDataReady) return;
 
-    function applyMorph(m) {
-      if (!svgDataReady) return; // no-op until SVG data populates arrays
-      var tgtArr = inst.tgt;
-      if (m <= 0.5) {
-        // Bexalta → Chaos: t goes 0→1 as m goes 0→0.5
-        var t = m / 0.5;
-        for (var i = 0; i < n * 3; i++) {
-          var v = bexArr[i] + (chaosArr[i] - bexArr[i]) * t;
-          tgtArr[i] = v;
-          posArr[i] = v;
+      var morph = typeof m === 'number' ? m : 0;
+      var tgtArr = state.inst.tgt;
+
+      if (morph <= 0.5) {
+        var t = morph / 0.5;
+        for (var i = 0; i < state.n * 3; i++) {
+          var bexToChaos = state.bexArr[i] + (state.chaosArr[i] - state.bexArr[i]) * t;
+          tgtArr[i] = bexToChaos;
+          state.posArr[i] = bexToChaos;
         }
       } else {
-        // Chaos → Foundtech: t goes 0→1 as m goes 0.5→1
-        var t = (m - 0.5) / 0.5;
-        for (var i = 0; i < n * 3; i++) {
-          var v = chaosArr[i] + (ftArr[i] - chaosArr[i]) * t;
-          tgtArr[i] = v;
-          posArr[i] = v;
+        var t = (morph - 0.5) / 0.5;
+        for (var i = 0; i < state.n * 3; i++) {
+          var chaosToFt = state.chaosArr[i] + (state.ftArr[i] - state.chaosArr[i]) * t;
+          tgtArr[i] = chaosToFt;
+          state.posArr[i] = chaosToFt;
         }
       }
-      inst.geo.attributes.position.needsUpdate = true;
 
-      // Update turbulence: high during scatter, low at endpoints
-      var turb = 1.0 - Math.abs(m - 0.5) * 2; // peaks at m=0.5
-      inst.mat.uniforms.uMorphProgress.value = 0.3 + turb * 0.6;
+      state.inst.geo.attributes.position.needsUpdate = true;
 
-      // Blend colors based on phase
-      if (m < 0.4) {
-        inst.setColor(bexColor, bexAccent, 0.15);
-      } else if (m > 0.6) {
-        inst.setColor(ftColor, ftAccent, 0.3);
+      var turb = 1.0 - Math.abs(morph - 0.5) * 2;
+      state.inst.mat.uniforms.uMorphProgress.value = 0.3 + turb * 0.6;
+
+      if (morph < 0.4) {
+        state.inst.setColor(bexColor, bexAccent, 0.15);
+      } else if (morph > 0.6) {
+        state.inst.setColor(ftColor, ftAccent, 0.3);
       }
-    }
+    };
 
-    // Create pinned timeline SYNCHRONOUSLY — this is the critical fix.
-    // applyMorph() is safe to call before data loads (returns early).
-    gsap.timeline({
+    state.timeline = gsap.timeline({
       scrollTrigger: {
         trigger: '#hero',
         start: 'top top',
@@ -109,99 +217,67 @@ window.BxHeroAnimations = (function () {
         pin: true,
         scrub: 0.5,
         pinSpacing: true,
-        anticipatePin: 1
+        anticipatePin: 1,
+        invalidateOnRefresh: true
       }
     })
-    // 0–15%: Bexalta logo stays formed (visible pause)
-    // Tween a dummy property so GSAP scrub fires onUpdate reliably
     .to(proxy, {
       hold: 0.15,
       duration: 0.15,
-      onUpdate: function () { applyMorph(0); }
+      onUpdate: function () { state.applyMorph(0); }
     })
-    // 15–75%: Bexalta → scatter → Foundtech (full morph sequence)
     .to(proxy, {
       morph: 1,
       duration: 0.60,
       ease: 'none',
       onUpdate: function () {
-        applyMorph(proxy.morph);
+        state.applyMorph(proxy.morph);
       }
     })
-    // 75–100%: Foundtech stays visible — tween hold property for reliable onUpdate
     .to(proxy, {
       hold: 1,
       duration: 0.25,
       onUpdate: function () {
-        applyMorph(1);
+        state.applyMorph(1);
       }
     });
 
-    // ── Async SVG loading — populates arrays, does NOT create ScrollTrigger ──
     (async function loadSVG() {
+      /* Use pre-loaded SVGs from preloader if available (faster + more reliable) */
+      var preloaded = window.__bxPreloadedSVGs;
+
       try {
-        var r = await fetch(svgUrl);
-        var svgText = await r.text();
-        var bexaltaPoints = await BxParticleCore.parseSVGToPoints(svgText, n, scale, 0, offY);
-        inst.setTarget(bexaltaPoints);
-        inst.setColor(BxParticleCore.COLORS.white, BxParticleCore.COLORS.primary, 0.15);
-
-        // T2.1: Load Foundtech SVG for morph target
-        var foundtechSvgUrl = 'assets/logo_foundtech_whitegreen.svg';
-        fetch(foundtechSvgUrl).then(function (r) { return r.text(); }).then(function (ftSvgText) {
-          console.log('[BxHero DEBUG] Foundtech SVG loaded, length:', ftSvgText.length);
-          BxParticleCore.parseSVGToPoints(ftSvgText, n, scale, 0, offY).then(function (foundtechPts) {
-            // Both logos use same scale + offY via parseSVGToPoints.
-            // No post-processing needed — each keeps its natural aspect ratio.
-            // Max X span = scale = 3.8, fits within visible frustum width (~4.33).
-            // offY = 3.5 positions both at the same vertical zone.
-            console.log('[BxHero] Foundtech points generated: scale=' + scale + ', offY=' + offY);
-
-            // Pre-generate chaos points once — offset to logo Y position
-            var chaosPoints = BxParticleCore.generateChaos(n, 3.0);
-            for (var ic = 0; ic < chaosPoints.length; ic++) { chaosPoints[ic].y += offY; }
-
-            // Populate the pre-allocated flat arrays with real SVG data
-            for (var i = 0; i < n; i++) {
-              var bp = bexaltaPoints[i % bexaltaPoints.length];
-              bexArr[i*3] = bp.x; bexArr[i*3+1] = bp.y; bexArr[i*3+2] = bp.z;
-              var cp = chaosPoints[i % chaosPoints.length];
-              chaosArr[i*3] = cp.x; chaosArr[i*3+1] = cp.y; chaosArr[i*3+2] = cp.z;
-              var fp = foundtechPts[i % foundtechPts.length];
-              ftArr[i*3] = fp.x; ftArr[i*3+1] = fp.y; ftArr[i*3+2] = fp.z;
-            }
-
-            // Flip the flag — applyMorph() now uses real data on next scroll frame
-            svgDataReady = true;
-            console.log('[BxHero] SVG data ready, morph arrays populated');
-
-            // Recalculate all ScrollTrigger positions now that content is final
-            ScrollTrigger.refresh();
-          }).catch(function (err) {
-            console.warn('[BxHero] Foundtech SVG parse failed:', err);
-            svgDataReady = true; // unblock ScrollTrigger even without Foundtech morph
-          });
-        }).catch(function (err) {
-          console.warn('[BxHero] Foundtech SVG load failed:', err);
-          svgDataReady = true; // unblock ScrollTrigger even without Foundtech logo
-        });
-      } catch (e) {
-        console.warn('[BxHero] bx-logo-svg: could not load', svgUrl, e);
-        svgDataReady = true; // unblock ScrollTrigger — hero renders without particle morph
+        if (preloaded && preloaded['assets/logo_bexalta_white.svg']) {
+          state.bexaltaSvgText = preloaded['assets/logo_bexalta_white.svg'];
+        } else {
+          var bexaltaResponse = await fetch('assets/logo_bexalta_white.svg');
+          state.bexaltaSvgText = await bexaltaResponse.text();
+        }
+      } catch (err) {
+        console.warn('[BxHero] Bexalta SVG load failed:', err);
+        state.svgDataReady = true;
+        return;
       }
+
+      try {
+        if (preloaded && preloaded['assets/logo_foundtech_whitegreen.svg']) {
+          state.foundtechSvgText = preloaded['assets/logo_foundtech_whitegreen.svg'];
+        } else {
+          var foundtechResponse = await fetch('assets/logo_foundtech_whitegreen.svg');
+          state.foundtechSvgText = await foundtechResponse.text();
+        }
+      } catch (err) {
+        console.warn('[BxHero] Foundtech SVG load failed:', err);
+      }
+
+      await rebuildLogoTargets(state, 3.0);
     })();
 
-    // Register with Widget Observer for lazy start/stop
     if (window.__bxObserveWidget) {
       window.__bxObserveWidget(wrapper, inst);
     } else {
       inst.startAnim();
     }
-
-    // Resize handler for particle canvas
-    window.addEventListener('resize', function () {
-      if (inst && inst.resize) inst.resize();
-    });
   }
 
   /* ── 2. bx-animated-counter ── */
@@ -265,7 +341,8 @@ window.BxHeroAnimations = (function () {
       scrollTrigger: {
         trigger: wrapper,
         start: 'top 90%',
-        toggleActions: 'play none none reverse'
+        toggleActions: 'play none none reverse',
+        invalidateOnRefresh: true
       }
     });
 
@@ -331,7 +408,8 @@ window.BxHeroAnimations = (function () {
       scrollTrigger: {
         trigger: subtext,
         start: 'top 85%',
-        toggleActions: 'play none none reverse'
+        toggleActions: 'play none none reverse',
+        invalidateOnRefresh: true
       }
     });
   }
@@ -361,7 +439,7 @@ window.BxHeroAnimations = (function () {
     // Fade out on scroll (unchanged)
     gsap.to(indicator, {
       opacity: 0,
-      scrollTrigger: { trigger: '#hero', start: 'top top', end: '+=200', scrub: true }
+      scrollTrigger: { trigger: '#hero', start: 'top top', end: '+=200', scrub: true, invalidateOnRefresh: true }
     });
   }
 
@@ -375,5 +453,28 @@ window.BxHeroAnimations = (function () {
     console.log('[BxHero] Hero animations initialized');
   }
 
-  return { init: init };
+  function resize() {
+    if (!_particleInst || !_logoState) return;
+    if (_particleInst.resize) _particleInst.resize();
+
+    var metrics = getLogoMetrics(_logoState.wrapper);
+    if (!metrics) return;
+
+    _logoState.metrics = metrics;
+    if (_particleInst.camera) {
+      _particleInst.camera.position.z = metrics.camZ;
+    }
+
+    if (_logoState.bexaltaSvgText) {
+      rebuildLogoTargets(_logoState, 3.0);
+    } else {
+      var initialChaos = offsetChaos(_logoState.n, 2.5, metrics.offY);
+      _particleInst.setTarget(initialChaos);
+      fillPointArray(_logoState.bexArr, initialChaos, _logoState.n);
+      fillPointArray(_logoState.chaosArr, initialChaos, _logoState.n);
+      fillPointArray(_logoState.ftArr, initialChaos, _logoState.n);
+    }
+  }
+
+  return { init: init, resize: resize };
 })();

@@ -20,26 +20,28 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 8px;
+  gap: clamp(6px, 1vw, 12px);       /* fluid gap: 6px @375 → 12px @1200 */
   z-index: 2;
 }
 
+/* Label — fluid font-size & letter-spacing (fixes load-order override of responsive.css) */
 .ua-label {
   font-family: var(--bx-font);
   font-weight: var(--bx-weight-bold);
-  font-size: 16px;
+  font-size: clamp(16px, 0.94rem + 0.19vw, 18px);        /* 16px @375 → 18px @1440 */
   line-height: 1;
-  letter-spacing: 1.65px;
+  letter-spacing: clamp(1.65px, 0.08rem + 0.08vw, 2.5px); /* 1.65px @375 → 2.5px @1440 */
   text-transform: uppercase;
   color: #c7c6c6;
   margin: 0;
 }
 
+/* Heading — fluid font-size & line-height (fixes load-order override of responsive.css) */
 .ua-heading {
   font-family: var(--bx-font);
   font-weight: var(--bx-weight-light);
-  font-size: 36px;
-  line-height: 39.6px;
+  font-size: clamp(36px, 1.41rem + 2.82vw, 56px);       /* 36px @375 → 56px @1440 */
+  line-height: clamp(39.6px, 1.55rem + 3.1vw, 60px);    /* ~1.1× at mobile, tightens at desktop */
   color: var(--bx-primary);
   margin: 0;
 }
@@ -52,8 +54,8 @@
   position: absolute;
   top: 0;
   left: 0;
-  width: min(100vw, 430px);
-  height: 844px;
+  width: var(--bx-section-width);
+  height: var(--bx-section-height);
   pointer-events: none;
   z-index: 1;
   display: none;
@@ -65,17 +67,18 @@
   border-radius: 50%;
 }
 
-.ua-dot--s11-1 { left: 31.2px; top: 168.8px; width: 3px; height: 3px; opacity: 0.12; }
-.ua-dot--s11-2 { left: 349px; top: 379.8px; width: 2px; height: 2px; opacity: 0.08; }
-.ua-dot--s11-3 { left: 46.8px; top: 629px; width: 4px; height: 4px; opacity: 0.10; }
+/* Percentage positions for fluid scaling */
+.ua-dot--s11-1 { left: 7.3%;  top: 20%;   width: 3px; height: 3px; opacity: 0.12; }
+.ua-dot--s11-2 { right: 6%;   top: 45%;   width: 2px; height: 2px; opacity: 0.08; }
+.ua-dot--s11-3 { left: 10.9%; top: 74.5%; width: 4px; height: 4px; opacity: 0.10; }
 
-.ua-dot--s12-1 { left: 356.8px; top: 211px; width: 2px; height: 2px; opacity: 0.10; }
-.ua-dot--s12-2 { left: 23.4px; top: 422px; width: 3px; height: 3px; opacity: 0.08; }
-.ua-dot--s12-3 { left: 327.5px; top: 671.2px; width: 4px; height: 4px; opacity: 0.12; }
+.ua-dot--s12-1 { right: 5.5%; top: 25%;   width: 2px; height: 2px; opacity: 0.10; }
+.ua-dot--s12-2 { left: 5.4%;  top: 50%;   width: 3px; height: 3px; opacity: 0.08; }
+.ua-dot--s12-3 { right: 8%;   top: 79.5%; width: 4px; height: 4px; opacity: 0.12; }
 
-.ua-dot--s13-1 { left: 39px; top: 151.92px; width: 3px; height: 3px; opacity: 0.10; }
-.ua-dot--s13-2 { left: 364.6px; top: 337.6px; width: 2px; height: 2px; opacity: 0.08; }
-.ua-dot--s13-3 { left: 31.2px; top: 654.33px; width: 4px; height: 4px; opacity: 0.12; }
+.ua-dot--s13-1 { left: 9.1%;  top: 18%;   width: 3px; height: 3px; opacity: 0.10; }
+.ua-dot--s13-2 { right: 4.7%; top: 40%;   width: 2px; height: 2px; opacity: 0.08; }
+.ua-dot--s13-3 { left: 7.3%;  top: 77.5%; width: 4px; height: 4px; opacity: 0.12; }
 
 .ua-shape-morph {
   position: absolute;
@@ -116,17 +119,62 @@
   font-family: var(--bx-font);
   font-weight: var(--bx-weight-body);
   font-size: 15px;
-  line-height: 20px;
+  line-height: 1.4;
   color: #c7c6c6;
   margin: 0;
-  max-width: var(--bx-content-width);
+  max-width: clamp(320px, 85vw, var(--bx-content-width));
 }
 
 .ua-paragraph__text + .ua-paragraph__text {
-  margin-top: 12px;
+  margin-top: clamp(8px, 1.2vw, 16px);  /* 8px @375 → 16px @1333 */
 }
 
 .ua-paragraph__text strong {
   color: var(--bx-primary);
   font-weight: var(--bx-weight-body);
+}
+
+/* Fix 12: Mobile theater/text separation — gradient fade at theater bottom */
+.ua-shape-morph::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: clamp(40px, 5vw, 80px);    /* fluid gradient: 40px @375 → 80px @1600 */
+  background: linear-gradient(to bottom, transparent, #050505);
+  pointer-events: none;
+  z-index: 2;
+}
+
+.ua-paragraph {
+  padding-top: clamp(12px, 1.5vw, 24px);  /* 12px @375 → 24px @1600 */
+}
+
+/* ==========================================================================
+   TABLET+ OVERRIDES — must live here (not responsive.css) because this file
+   loads AFTER responsive.css in index.html (line 47 vs 46).
+   Same-specificity rules in responsive.css would be overridden by base styles above.
+   ========================================================================== */
+@media (min-width: 768px) {
+  /* Fix 4: Theater breakout — full viewport width */
+  .ua-shape-morph {
+    top: var(--bx-theater-top);  /* use token directly: 160px @375 → 270px @1440 */
+    width: 100vw;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  .ua-paragraph { padding: 0 var(--bx-padding-x); }
+  .ua-paragraph__text { max-width: var(--bx-content-width); }
+}
+
+/* P2-Fix 5: Landscape safety — bottom-anchor paragraph, compress theater */
+@media (min-width: 768px) and (max-height: 900px) {
+  .ua-paragraph {
+    top: auto;
+    bottom: clamp(20px, 3svh, 60px);
+  }
+  .ua-shape-morph {
+    height: var(--bx-theater-height);
+  }
 }

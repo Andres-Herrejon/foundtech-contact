@@ -20,6 +20,7 @@
 .cr-intro {
   position: absolute;
   inset: 0;
+  max-width: none;        /* Override .bx-section > * { max-width: 1200px } */
   z-index: 3;
   pointer-events: none;
 }
@@ -30,25 +31,25 @@
   top: var(--bx-header-top);             /* 60px */
   left: 0;
   width: 100%;
-  height: 91px;
+  height: clamp(70px, 8vw, 120px);
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
 .cr-logo__img {
-  width: 326px;
-  height: 75px;
+  width: clamp(280px, 75vw, 500px);
+  height: auto;
   object-fit: contain;
 }
 
 /* About heading — centered large text */
 .cr-about-heading {
   position: absolute;
-  top: 180px;
+  top: clamp(180px, 21.3%, 280px);
   left: 50%;
   transform: translateX(-50%);
-  width: min(80vw, 340px);
+  width: clamp(300px, 80vw, 560px);
   z-index: 2;
 }
 
@@ -56,7 +57,7 @@
   font-family: var(--bx-font);
   font-weight: var(--bx-weight-light);
   font-size: 25px;
-  line-height: 38px;
+  line-height: 1.5;
   color: #c7c6c6;
   text-align: center;
   margin: 0;
@@ -65,10 +66,10 @@
 /* Partner paragraph */
 .cr-partner {
   position: absolute;
-  top: 480px;
+  top: clamp(480px, 56.9%, 680px);
   left: 50%;
   transform: translateX(-50%);
-  width: var(--bx-content-width);
+  width: clamp(320px, 85vw, var(--bx-content-width));
   z-index: 2;
 }
 
@@ -76,7 +77,7 @@
   font-family: var(--bx-font);
   font-weight: var(--bx-weight-body);
   font-size: 15px;
-  line-height: 20px;
+  line-height: 1.4;
   color: #c7c6c6;
   margin: 0;
 }
@@ -89,10 +90,12 @@
 /* Logo carousel strip */
 .cr-carousel {
   position: absolute;
-  top: 680px;
-  left: 0;
-  width: min(100vw, 430px);
-  height: 16px;
+  top: clamp(680px, 80.6%, 960px);
+  /* P2-Fix 6: Center on viewport, full width */
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100vw;
+  height: clamp(16px, 2vw, 24px);
   overflow: hidden;
   z-index: 2;
   pointer-events: auto;
@@ -101,14 +104,13 @@
 .cr-carousel__track {
   display: flex;
   align-items: center;
-  gap: 35px;
-  padding-left: 25px;
+  gap: clamp(24px, 3.5vw, 48px);
   width: max-content;
   animation: cr-carousel-scroll 25s linear infinite;
 }
 
 .cr-carousel__logo {
-  height: 16px;
+  height: clamp(16px, 2vw, 24px);
   width: auto;
   opacity: 0.5;
   flex-shrink: 0;
@@ -116,7 +118,7 @@
 
 @keyframes cr-carousel-scroll {
   0%   { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
+  100% { transform: translateX(-25%); }  /* Scroll 1 of 4 sets for seamless loop */
 }
 
 /* ==========================================================================
@@ -168,10 +170,10 @@
   font-family: var(--bx-font);
   font-weight: var(--bx-weight-body);
   font-size: 15px;
-  line-height: 20px;
+  line-height: 1.4;
   color: #c7c6c6;
   margin: 0;
-  max-width: var(--bx-content-width);
+  max-width: clamp(320px, 85vw, var(--bx-content-width));
 }
 
 .cr-paragraph__text strong {
@@ -195,7 +197,7 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 8px;
+  gap: clamp(6px, 1vw, 12px);
   z-index: 30;
   pointer-events: none;
 }
@@ -215,7 +217,7 @@
   font-family: var(--bx-font);
   font-weight: var(--bx-weight-light);
   font-size: 36px;
-  line-height: 39.6px;
+  line-height: 1.1;
   color: var(--bx-primary);
   margin: 0;
 }
@@ -223,3 +225,22 @@
 .cr-heading span {
   display: block;
 }
+
+/* Fix 12: Mobile theater/text separation — gradient fade at theater bottom */
+.cr-shape-morph::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: clamp(40px, 5vw, 80px);
+  background: linear-gradient(to bottom, transparent, #050505);
+  pointer-events: none;
+  z-index: 2;
+}
+
+.cr-paragraph {
+  padding-top: clamp(12px, 1.5vw, 24px);
+}
+
+/* RC#1 FIX: Moved to responsive.css — cascade order requires it */

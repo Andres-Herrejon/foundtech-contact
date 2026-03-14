@@ -9,6 +9,7 @@
 window.BxAdiosRiesgosAnimations = (function () {
   'use strict';
 
+  var _instances = [];
   var PIN_END = '+=460%';
 
   // Phase pacing (with dedicated text-transition windows between animations).
@@ -1545,6 +1546,7 @@ window.BxAdiosRiesgosAnimations = (function () {
         trigger: section,
         start: 'top top',
         end: PIN_END,
+        invalidateOnRefresh: true,
         onEnter: function () { gsap.to(paragraph, { opacity: 1, duration: 0.3 }); },
         onLeave: function () { gsap.to(paragraph, { opacity: 0, duration: 0.3 }); },
         onEnterBack: function () { gsap.to(paragraph, { opacity: 1, duration: 0.3 }); },
@@ -1560,6 +1562,7 @@ window.BxAdiosRiesgosAnimations = (function () {
       pinSpacing: true,
       scrub: 0.8,
       anticipatePin: 1,
+      invalidateOnRefresh: true,
       onEnter: function () {
         applyWidgetBlend(layers, instances, 0);
         applyWidgetScatter(instances, 0);
@@ -1602,6 +1605,7 @@ window.BxAdiosRiesgosAnimations = (function () {
     ScrollTrigger.create({
       trigger: section,
       start: 'bottom top',
+      invalidateOnRefresh: true,
       onEnter: function () {
         stopAllInstances(instances);
         if (hooks && typeof hooks.onFullyOut === 'function') hooks.onFullyOut();
@@ -1656,6 +1660,7 @@ window.BxAdiosRiesgosAnimations = (function () {
       trigger: section,
       start: 'top top',
       end: PIN_END,          // +=460% — matches the section's pin duration
+      invalidateOnRefresh: true,
       onEnter: staggerIn,
       onLeave: fadeOut,
       onEnterBack: staggerIn,
@@ -1678,6 +1683,7 @@ window.BxAdiosRiesgosAnimations = (function () {
     var sidewalkWidget = sidewalkLayer ? createBuildingSidewalkWidget(sidewalkLayer) : null;
 
     var instances = [urgentWidget, helmetWidget, sidewalkWidget];
+    _instances = instances;
 
     for (var i = 0; i < instances.length; i++) {
       if (instances[i]) instances[i].__running = false;
@@ -1707,6 +1713,7 @@ window.BxAdiosRiesgosAnimations = (function () {
         ScrollTrigger.create({
           trigger: '#hola-eficiencia',
           start: 'bottom bottom',
+          invalidateOnRefresh: true,
           onLeave: function () {
             if (!ambient || !ambientVisible) return;
             ambient.fadeOut(0.9);
@@ -1773,18 +1780,18 @@ window.BxAdiosRiesgosAnimations = (function () {
       }
     });
 
-    window.addEventListener('resize', function () {
-      for (var j = 0; j < instances.length; j++) {
-        if (instances[j] && typeof instances[j].resize === 'function') {
-          instances[j].resize();
-        }
-      }
-    });
-
     // Fixed header fade (replaces BxStickyHeaders)
     var arHeader = section.querySelector('.ar-header');
     initFixedHeaderFade(section, arHeader);
   }
 
-  return { init: init };
+  function resize() {
+    for (var j = 0; j < _instances.length; j++) {
+      if (_instances[j] && typeof _instances[j].resize === 'function') {
+        _instances[j].resize();
+      }
+    }
+  }
+
+  return { init: init, resize: resize };
 })();

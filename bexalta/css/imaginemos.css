@@ -25,7 +25,7 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 8px;
+  gap: clamp(8px, 1vw, 14px);              /* P3: fluid header gap 8→14px (mobile preserved) */
   z-index: 100;
   opacity: 0;
   pointer-events: none;
@@ -48,7 +48,7 @@
   font-family: var(--bx-font);
   font-weight: var(--bx-weight-light);
   font-size: 36px;
-  line-height: 39.6px;
+  line-height: 1.1;
   color: var(--bx-primary);
   margin: 0;
 }
@@ -76,11 +76,11 @@
 /* ---------- City Grid (near viewport bottom during pin) ---------- */
 .imag-city-grid {
   position: absolute;
-  top: 430px;                             /* below text-morph theater — city grid fits within 844px */
+  top: clamp(430px, 51%, 580px);
   left: 50%;
   transform: translateX(-50%);
-  width: min(100vw, 430px);               /* fluid — matched to viewport token */
-  height: 340px;                          /* scaled down proportionally from 380px */
+  width: clamp(375px, 100vw, var(--bx-section-width));
+  height: clamp(340px, 40.3%, 520px);
   overflow: hidden;
   z-index: 0;
 }
@@ -90,3 +90,5 @@
   width: 100%;
   height: 100%;
 }
+
+/* RC#1 FIX: Moved to responsive.css — cascade order requires it */

@@ -122,16 +122,24 @@ window.BxStickyHeaders = (function () {
     if (!nextClone) return;
     if (activeGroup === groupId && activeClone === nextClone) return;
 
-    // Crossfade from current active clone (if any).
-    if (activeClone && activeClone !== nextClone) {
-      var oldClone = activeClone;
-      var oldGroup = activeGroup;
-      gsap.to(oldClone, {
-        opacity: 0,
-        duration: 0.2,
-        ease: 'power1.out',
-        onComplete: function () { removeClone(oldGroup, oldClone); }
-      });
+    // Kill ALL other clones immediately to prevent overlap during fast scroll.
+    // This replaces the old crossfade-only approach that left a 200ms window
+    // where two clones could both be visible (race between deactivate rAF
+    // and activate tween).
+    var allClones = overlay.querySelectorAll('.bx-sticky-header-clone');
+    for (var i = 0; i < allClones.length; i++) {
+      if (allClones[i] !== nextClone) {
+        gsap.killTweensOf(allClones[i]);
+        allClones[i].style.opacity = '0';
+      }
+    }
+    // Clean up stale clone references for non-active groups
+    for (var gid in groups) {
+      if (gid !== groupId && groups[gid].clone && groups[gid].clone !== nextClone) {
+        if (!lockedGroups[gid]) {
+          removeClone(gid, groups[gid].clone);
+        }
+      }
     }
 
     activeClone = nextClone;

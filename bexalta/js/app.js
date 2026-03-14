@@ -92,6 +92,7 @@
         trigger: section,
         start: 'top 80%',
         once: true,
+        invalidateOnRefresh: true,
         onEnter: function () {
           gsap.to(others, {
             opacity: 1, y: 0,
@@ -106,13 +107,8 @@
     console.log('[Bexalta] Section group transitions initialized');
   }
 
-  /* ── Master init on DOMContentLoaded ── */
-  if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
-  window.scrollTo(0, 0);
-
-  document.addEventListener('DOMContentLoaded', function () {
-    window.scrollTo(0, 0);
-
+  /* ── Core init (called after preloader completes) ── */
+  function initEverything() {
     /* Reduced-motion: show all content at final state, skip animations */
     if (window.BxMotionPrefs && BxMotionPrefs.isReduced()) {
       document.querySelectorAll('.bx-scroll-reveal').forEach(function (el) {
@@ -120,6 +116,7 @@
         el.style.transform = 'translateY(0)';
       });
       console.log('[Bexalta] Reduced motion — animations skipped');
+      if (window.__bxDismissPreloader) window.__bxDismissPreloader();
       return;
     }
 
@@ -142,26 +139,65 @@
     /* 5. Route-change-style reveals between section groups */
     initSectionGroupTransitions();
 
-    /* 6. Global resize → recalculate ScrollTrigger positions (debounced) */
+    /* 6. Global resize → recalculate ScrollTrigger + canvas dimensions (debounced) */
+    function handleGlobalResize() {
+      /* Resize all section module canvases first (before ScrollTrigger recalculates) */
+      modules.forEach(function (name) {
+        if (window[name] && typeof window[name].resize === 'function') {
+          try {
+            window[name].resize();
+          } catch (err) {
+            console.warn('[Bexalta] Resize error in ' + name + ':', err);
+          }
+        }
+      });
+
+      /* Refresh ScrollTrigger positions (most important for responsive) */
+      if (typeof ScrollTrigger !== 'undefined') {
+        ScrollTrigger.refresh();
+      }
+
+      /* Tell Lenis to remeasure page dimensions */
+      if (window.BxSmoothScroll) {
+        var lenis = BxSmoothScroll.getInstance();
+        if (lenis && typeof lenis.resize === 'function') {
+          lenis.resize();
+        }
+      }
+    }
+
     var resizeTimer;
     window.addEventListener('resize', function () {
       clearTimeout(resizeTimer);
-      resizeTimer = setTimeout(function () {
-        if (typeof ScrollTrigger !== 'undefined') {
-          ScrollTrigger.refresh();
-        }
-      }, 200);
+      resizeTimer = setTimeout(handleGlobalResize, 200);
     });
 
     /* 7. Orientation change → refresh after layout settles */
     window.addEventListener('orientationchange', function () {
-      setTimeout(function () {
-        if (typeof ScrollTrigger !== 'undefined') {
-          ScrollTrigger.refresh();
-        }
-      }, 200);
+      setTimeout(handleGlobalResize, 200);
     });
 
+    /* 8. Dismiss preloader overlay */
+    if (window.__bxDismissPreloader) {
+      window.__bxDismissPreloader();
+    }
+
     console.log('[Bexalta] All systems initialized');
+  }
+
+  /* ── Master init on DOMContentLoaded ── */
+  if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+  window.scrollTo(0, 0);
+
+  document.addEventListener('DOMContentLoaded', function () {
+    window.scrollTo(0, 0);
+
+    /* Wait for preloader to finish loading assets, then init everything */
+    if (window.__bxPreloaderReady) {
+      window.__bxPreloaderReady.then(initEverything);
+    } else {
+      /* Fallback: no preloader present, init immediately */
+      initEverything();
+    }
   });
 })();

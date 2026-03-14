@@ -4,6 +4,7 @@
 window.BxUpgradeAdentroAnimations = (function () {
   'use strict';
 
+  var _instances = [];
   var hasInitialized = false;
   var moleculeSeedCache = null;
 
@@ -1456,6 +1457,7 @@ window.BxUpgradeAdentroAnimations = (function () {
         trigger: section,
         start: 'top top',
         end: PIN_END,
+        invalidateOnRefresh: true,
         onEnter: function () { gsap.to(paragraph, { opacity: 1, duration: 0.3 }); },
         onLeave: function () { gsap.to(paragraph, { opacity: 0, duration: 0.3 }); },
         onEnterBack: function () { gsap.to(paragraph, { opacity: 1, duration: 0.3 }); },
@@ -1471,6 +1473,7 @@ window.BxUpgradeAdentroAnimations = (function () {
       pinSpacing: true,
       scrub: 0.8,
       anticipatePin: 1,
+      invalidateOnRefresh: true,
       onEnter: function () {
         applyWidgetBlend(layers, instances, 0);
         applyWidgetScatter(instances, 0);
@@ -1518,6 +1521,7 @@ window.BxUpgradeAdentroAnimations = (function () {
     ScrollTrigger.create({
       trigger: section,
       start: 'bottom top',
+      invalidateOnRefresh: true,
       onEnter: function () {
         stopAllInstances(instances);
         if (hooks && typeof hooks.onFullyOut === 'function') hooks.onFullyOut();
@@ -1570,6 +1574,7 @@ window.BxUpgradeAdentroAnimations = (function () {
       trigger: section,
       start: 'top top',
       end: PIN_END,          // +=460% — matches the section's pin duration
+      invalidateOnRefresh: true,
       onEnter: staggerIn,
       onLeave: fadeOut,
       onEnterBack: staggerIn,
@@ -1594,6 +1599,7 @@ window.BxUpgradeAdentroAnimations = (function () {
     var buildingWidget = buildingLayer ? initBuildingGrowth(buildingLayer) : null;
 
     var instances = [floatWidget, opacityWidget, buildingWidget];
+    _instances = instances;
 
     for (var i = 0; i < instances.length; i++) {
       if (instances[i]) instances[i].__running = false;
@@ -1623,6 +1629,7 @@ window.BxUpgradeAdentroAnimations = (function () {
         ScrollTrigger.create({
           trigger: '#upgrade-afuera-1',
           start: 'bottom bottom',
+          invalidateOnRefresh: true,
           onLeave: function () {
             if (!ambient || !ambientVisible) return;
             ambient.fadeOut(0.9);
@@ -1692,19 +1699,19 @@ window.BxUpgradeAdentroAnimations = (function () {
       }
     });
 
-    window.addEventListener('resize', function () {
-      for (var j = 0; j < instances.length; j++) {
-        if (instances[j] && typeof instances[j].resize === 'function') {
-          instances[j].resize();
-        }
-      }
-    });
-
     var uaHeader = section.querySelector('.ua-header');
     if (uaHeader) {
       initFixedHeaderFade(section, uaHeader);
     }
   }
 
-  return { init: init };
+  function resize() {
+    for (var j = 0; j < _instances.length; j++) {
+      if (_instances[j] && typeof _instances[j].resize === 'function') {
+        _instances[j].resize();
+      }
+    }
+  }
+
+  return { init: init, resize: resize };
 })();

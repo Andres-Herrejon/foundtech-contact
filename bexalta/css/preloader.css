@@ -1,0 +1,77 @@
+/* =========================================================
+   preloader.css — Full-screen loading overlay for Bexalta V2
+   ========================================================= */
+
+/* Prevent scroll while loading */
+body.bx-loading {
+  overflow: hidden;
+}
+
+/* Full-screen overlay */
+.bx-preloader {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  background: #0a0a0a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Centered content container */
+.bx-preloader__content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 32px;
+}
+
+/* Spinning ring */
+.bx-preloader__ring {
+  width: 60px;
+  height: 60px;
+  border: 3px solid rgba(162, 198, 46, 0.15);
+  border-top-color: #a2c62e;
+  border-radius: 50%;
+  animation: bx-spin 1s linear infinite;
+}
+
+@keyframes bx-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Progress bar container */
+.bx-preloader__bar-container {
+  width: 200px;
+  height: 3px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+/* Progress bar fill */
+.bx-preloader__bar {
+  height: 100%;
+  width: 0%;
+  background: #a2c62e;
+  border-radius: 2px;
+  transition: width 0.3s ease;
+}
+
+/* Status text */
+.bx-preloader__text {
+  font-family: "Gotham SSm A", "Gotham SSm B", system-ui, sans-serif;
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.4);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+/* Fade-out state */
+.bx-preloader--done {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.6s ease;
+}

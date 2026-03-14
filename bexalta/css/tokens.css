@@ -41,17 +41,31 @@
   --bx-weight-medium:    500;
   --bx-weight-bold:      700;
 
-  /* ── Spacing & Layout ───────────────────────────────────── */
-  --bx-padding-x:        28px;
-  --bx-section-width:    min(100vw, 430px);
-  --bx-section-height:   844px;
-  --bx-content-width:    calc(min(100vw, 430px) - var(--bx-padding-x) * 2);
+  /* ── Spacing & Layout (fluid clamp: 375px → 1440px) ────── */
+  /* --bx-padding-x:  28px @375  →  36px @768  →  48px @1024  →  60px @1440  */
+  --bx-padding-x:        clamp(28px, 1.05rem + 3vw, 60px);
 
-  /* ── Section Zones (from Figma vertical layout) ─────────── */
-  --bx-header-top:       max(60px, calc(env(safe-area-inset-top, 0px) + 12px));    /* header/label Y offset — accounts for notch */
-  --bx-theater-top:      160px;   /* main visual area start  */
-  --bx-theater-height:   420px;   /* main visual area height — fits text morph animations */
-  --bx-footer-top:       572px;   /* paragraph/caption zone — 8px higher for full visibility */
+  /* --bx-section-width:  100vw @≤430  →  600 @768  →  800 @1024  →  1000 @1440  →  max 1200  */
+  --bx-section-width:    clamp(min(100vw, 430px), 78vw, 1200px);
+
+  /* --bx-section-height:  844px @mobile  →  1024 @tablet  →  1080 @desktop  */
+  --bx-section-height:   clamp(844px, 100svh, 1080px);
+
+  /* derived: content = section - 2 * padding */
+  --bx-content-width:    calc(var(--bx-section-width) - var(--bx-padding-x) * 2);
+
+  /* ── Section Zones (fluid clamp: 375px → 1440px) ─────────── */
+  /* --bx-header-top:  60px @375  →  80 @768  →  90 @1024  →  100 @1440  */
+  --bx-header-top:       clamp(max(60px, calc(env(safe-area-inset-top, 0px) + 12px)), 2.87rem + 3.75vw, 100px);
+
+  /* --bx-theater-top:  160px @375  →  230 @768  →  250 @1024  →  270 @1440  */
+  --bx-theater-top:      clamp(160px, 7.58rem + 10.33vw, 270px);
+
+  /* --bx-theater-height:  420px @375  →  560 @768  →  580 @1024  →  620 @1440  */
+  --bx-theater-height:   clamp(420px, 21.85rem + 18.78vw, 620px);
+
+  /* --bx-footer-top:  572px @mobile — jumps to fluid at 768px (see below) */
+  --bx-footer-top:       572px;
 
   /* ── Radii & Effects ────────────────────────────────────── */
   --bx-radius-sm:        4px;
@@ -82,4 +96,27 @@
   --bx-space-8:          64px;
   --bx-space-10:         80px;
   --bx-space-12:         96px;
+}
+
+/* ── Footer-top: discontinuous jump at tablet needs media query ─────── */
+/* 820px @768  →  860 @1024  →  920 @1440 — fluid from 768+ */
+@media (min-width: 768px) {
+  :root {
+    --bx-footer-top: calc(var(--bx-theater-top) + var(--bx-theater-height) + 24px);
+  }
+}
+
+/* P2-Fix 1: Landscape viewports shorter than 900px —
+   Remove the 844px section-height floor and compress theater
+   so all content fits within the actual viewport height.
+   Fires for iPad landscape (1024×768), laptops (1440×900), etc.
+   Mobile (< 768px wide) is never affected. */
+@media (min-width: 768px) and (max-height: 900px) {
+  :root {
+    --bx-section-height: 100svh;
+    /* P2-Fix 2: Compress theater to leave room for header and paragraph */
+    --bx-theater-top: clamp(130px, 16svh, 200px);
+    --bx-theater-height: calc(100svh - 290px);
+    --bx-footer-top: calc(var(--bx-theater-top) + var(--bx-theater-height) + 16px);
+  }
 }

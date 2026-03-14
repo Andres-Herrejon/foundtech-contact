@@ -33,6 +33,7 @@
   <script src="https://unpkg.com/lenis@1.1.18/dist/lenis.min.js"></script>
 
   <!-- Local Stylesheets -->
+  <link rel="stylesheet" href="css/preloader.css">
   <link rel="stylesheet" href="css/tokens.css">
   <link rel="stylesheet" href="css/base.css">
   <link rel="stylesheet" href="css/layout.css">
@@ -50,6 +51,18 @@
 
 <body>
 
+  <!-- Preloader: asset loading screen -->
+  <div id="bx-preloader" class="bx-preloader">
+    <div class="bx-preloader__content">
+      <div class="bx-preloader__ring"></div>
+      <div class="bx-preloader__bar-container">
+        <div class="bx-preloader__bar"></div>
+      </div>
+      <p class="bx-preloader__text">Cargando experiencia...</p>
+    </div>
+  </div>
+  <script src="js/preloader.js"></script>
+
   <!-- Section: Hero -->
   <section id="hero" class="bx-section">
     <div class="hero">
@@ -60,11 +73,11 @@
 
       <!-- Main heading -->
       <h1 class="hero__heading">
-        30 a&ntilde;os<br>
+        30 a&ntilde;os<br class="bx-br-mobile">
         construyendo<br>
-        el portafolio<br>
+        el portafolio<br class="bx-br-mobile">
         inmobiliario<br>
-        m&aacute;s s&oacute;lido<br>
+        m&aacute;s s&oacute;lido<br class="bx-br-mobile">
         de Jalisco
       </h1>
 
@@ -356,8 +369,11 @@
         <img src="./assets/foundtech-logo.png" alt="Foundtech" class="cr-logo__img">
       </div>
       <div class="cr-about-heading">
-        <p class="cr-about-heading__text">Apostamos por la automatizaci&oacute;n tecnol&oacute;gica para la
-          maximizaci&oacute;n de valor de los negocios</p>
+        <p class="cr-about-heading__text">
+          Apostamos por la automatizaci&oacute;n<br class="bx-show-tablet">
+          tecnol&oacute;gica para la maximizaci&oacute;n<br class="bx-show-tablet">
+          de valor de los negocios
+        </p>
       </div>
       <div class="cr-partner">
         <p class="cr-partner__text">En <strong>Foundtech</strong> hemos trabajado con <strong>l&iacute;deres en la
@@ -373,7 +389,19 @@
           <img src="./assets/logo-google.png" alt="Google" class="cr-carousel__logo">
           <img src="./assets/logo-zurich-airport.png" alt="Zurich Airport" class="cr-carousel__logo">
           <img src="./assets/logo-dupont.png" alt="DuPont" class="cr-carousel__logo">
-          <!-- Duplicate set for infinite scroll -->
+          <!-- Duplicate sets for infinite scroll (4 total = seamless at all viewports) -->
+          <img src="./assets/logo-dhl.png" alt="DHL" class="cr-carousel__logo">
+          <img src="./assets/logo-nestle.png" alt="Nestl&eacute;" class="cr-carousel__logo">
+          <img src="./assets/logo-roche.png" alt="Roche" class="cr-carousel__logo">
+          <img src="./assets/logo-google.png" alt="Google" class="cr-carousel__logo">
+          <img src="./assets/logo-zurich-airport.png" alt="Zurich Airport" class="cr-carousel__logo">
+          <img src="./assets/logo-dupont.png" alt="DuPont" class="cr-carousel__logo">
+          <img src="./assets/logo-dhl.png" alt="DHL" class="cr-carousel__logo">
+          <img src="./assets/logo-nestle.png" alt="Nestl&eacute;" class="cr-carousel__logo">
+          <img src="./assets/logo-roche.png" alt="Roche" class="cr-carousel__logo">
+          <img src="./assets/logo-google.png" alt="Google" class="cr-carousel__logo">
+          <img src="./assets/logo-zurich-airport.png" alt="Zurich Airport" class="cr-carousel__logo">
+          <img src="./assets/logo-dupont.png" alt="DuPont" class="cr-carousel__logo">
           <img src="./assets/logo-dhl.png" alt="DHL" class="cr-carousel__logo">
           <img src="./assets/logo-nestle.png" alt="Nestl&eacute;" class="cr-carousel__logo">
           <img src="./assets/logo-roche.png" alt="Roche" class="cr-carousel__logo">
@@ -427,10 +455,12 @@
       <!-- Stacked heading lines -->
       <div class="cta__headings">
         <p class="cta__line">Que un futuro</p>
-        <p class="cta__line">digital, eficiente</p>
-        <p class="cta__line">y sostenible</p>
-        <p class="cta__line">para <strong>Bexalta</strong></p>
-        <p class="cta__line">puede comenzar</p>
+        <p class="cta__line bx-hide-tablet">digital, eficiente</p>
+        <p class="cta__line bx-hide-tablet">y sostenible</p>
+        <p class="cta__line bx-hide-tablet">para <strong>Bexalta</strong></p>
+        <p class="cta__line bx-hide-tablet">puede comenzar</p>
+        <p class="cta__line bx-show-tablet">digital, eficiente y sostenible</p>
+        <p class="cta__line bx-show-tablet">para <strong>Bexalta</strong> puede comenzar</p>
       </div>
 
       <!-- Sparkles area: HOY + CTA button -->

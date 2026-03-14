@@ -14,6 +14,8 @@
  */
 window.BxCtaAnimations = (function () {
 
+  var _resizeFn = null;
+
   function init() {
     var section = document.getElementById('cta');
     if (!section) return;
@@ -62,9 +64,11 @@ window.BxCtaAnimations = (function () {
     sparklesArea.appendChild(fieldMask);
 
     /* 3 glow lines — Foundtech green CSS gradients (#a2c62e → #d4ff60 → #efffb0) */
+    /* RC#4 FIX: Dynamic glow line position based on HOY element height */
+    var glowTop = hoy ? (hoy.offsetHeight + 4) : 66;
     var glowWrap = document.createElement('div');
     glowWrap.style.cssText =
-      'position:absolute;top:66px;left:5%;width:90%;height:0;z-index:2';
+      'position:absolute;top:' + glowTop + 'px;left:5%;width:90%;height:0;z-index:2';
 
     var glowWide = document.createElement('div');
     glowWide.style.cssText =
@@ -124,6 +128,10 @@ window.BxCtaAnimations = (function () {
       fW  = fieldCanvas.width  = fieldCanvas.offsetWidth;
       fH  = fieldCanvas.height = fieldCanvas.offsetHeight;
       updateFieldMask();
+      /* RC#4 FIX: Recalculate glow line position on resize */
+      if (hoy && glowWrap) {
+        glowWrap.style.top = (hoy.offsetHeight + 4) + 'px';
+      }
     }
 
     /* Circular particle — omnidirectional drift, sinusoidal twinkling */
@@ -304,6 +312,7 @@ window.BxCtaAnimations = (function () {
       trigger: section,
       start: 'top 75%',
       end: 'bottom 20%',
+      invalidateOnRefresh: true,
       onEnter: function () {
         setHidden();
         entranceTL.restart();
@@ -360,11 +369,13 @@ window.BxCtaAnimations = (function () {
       start();
     }
 
-    window.addEventListener('resize', function () {
-      if (running) resize();
-    });
+    _resizeFn = function () { if (running) resize(); };
   }
 
-  return { init: init };
+  function publicResize() {
+    if (_resizeFn) _resizeFn();
+  }
+
+  return { init: init, resize: publicResize };
 
 })();

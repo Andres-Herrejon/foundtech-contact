@@ -15,6 +15,8 @@
 window.BxCredencialesAnimations = (function () {
   'use strict';
 
+  var _instances = [];
+
   /* ── Constants ────────────────────────────────────────────────────── */
   var PIN_END       = '+=500%';   /* extra 100% vs Afuera for intro phase */
   var INTRO_END     = 0.20;       /* 0–20% scroll: intro stagger + hold */
@@ -153,7 +155,16 @@ window.BxCredencialesAnimations = (function () {
     var loaded = 0;
     var ready = false;
 
+    /* Check for pre-loaded frames from centralized preloader */
+    var preloadedFrames = window.__bxPreloadedFrames && window.__bxPreloadedFrames[folder];
+
     function preload() {
+      if (preloadedFrames && preloadedFrames.length >= FRAME_COUNT) {
+        frames = preloadedFrames;
+        loaded = FRAME_COUNT;
+        ready = true;
+        return Promise.resolve();
+      }
       return new Promise(function (resolve) {
         for (var i = 0; i < FRAME_COUNT; i++) {
           var img = new Image();
@@ -579,6 +590,7 @@ window.BxCredencialesAnimations = (function () {
       pin: true,
       pinSpacing: true,
       anticipatePin: 1,
+      invalidateOnRefresh: true,
       onEnter: function () {
         sectionActive = true;
         startTicker();
@@ -638,6 +650,7 @@ window.BxCredencialesAnimations = (function () {
     var inst2 = layer2 ? initImageSequenceLayer(layer2) : null;
     var inst3 = layer3 ? initWaveTheaterLayer(layer3)   : null;
     var instances = [inst1, inst2, inst3];
+    _instances = instances;
 
     /* Fixed headers (one per canvas layer, crossfaded by scroll) */
     var crHeaders = [
@@ -649,14 +662,13 @@ window.BxCredencialesAnimations = (function () {
 
     /* Pinned scroll orchestrator */
     initPinnedScroll(section, layers, instances, headerCtrl);
+  }
 
-    /* Resize handler */
-    window.addEventListener('resize', function () {
-      instances.forEach(function (inst) {
-        if (inst && inst.resize) inst.resize();
-      });
+  function resize() {
+    _instances.forEach(function (inst) {
+      if (inst && inst.resize) inst.resize();
     });
   }
 
-  return { init: init };
+  return { init: init, resize: resize };
 })();
