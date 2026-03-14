@@ -15,6 +15,8 @@
 window.BxUpgradeAfueraAnimations = (function () {
   'use strict';
 
+  var _instances = [];
+
   /* ── Constants (sequential, non-overlapping with hold) ───────────── */
   var PIN_END = '+=500%';     // longer pin = more scroll room to appreciate each anim
 
@@ -163,7 +165,16 @@ window.BxUpgradeAfueraAnimations = (function () {
     var loaded = 0;
     var ready = false;
 
+    /* Check for pre-loaded frames from centralized preloader */
+    var preloadedFrames = window.__bxPreloadedFrames && window.__bxPreloadedFrames[folder];
+
     function preload() {
+      if (preloadedFrames && preloadedFrames.length >= FRAME_COUNT) {
+        frames = preloadedFrames;
+        loaded = FRAME_COUNT;
+        ready = true;
+        return Promise.resolve();
+      }
       return new Promise(function (resolve) {
         for (var i = 0; i < FRAME_COUNT; i++) {
           var img = new Image();
@@ -865,6 +876,7 @@ window.BxUpgradeAfueraAnimations = (function () {
       pin: true,
       pinSpacing: true,
       anticipatePin: 1,
+      invalidateOnRefresh: true,
       onEnter: function () {
         sectionActive = true;
         sectionExitedViewport = false;
@@ -901,6 +913,7 @@ window.BxUpgradeAfueraAnimations = (function () {
       trigger: section,
       start: 'top bottom',   // enters viewport from below
       end: 'bottom top',     // exits viewport going up
+      invalidateOnRefresh: true,
       onLeave: function () {
         /* Section fully scrolled past — now safe to kill particles */
         sectionExitedViewport = true;
@@ -959,6 +972,7 @@ window.BxUpgradeAfueraAnimations = (function () {
       trigger: section,
       start: 'top top',
       end: PIN_END,          // +=400% — matches the section's pin duration
+      invalidateOnRefresh: true,
       onEnter: staggerIn,
       onLeave: fadeOut,
       onEnterBack: staggerIn,
@@ -999,21 +1013,21 @@ window.BxUpgradeAfueraAnimations = (function () {
     var inst2 = layer2 ? initImageSequenceLayer(layer2) : null;
     var inst3 = layer3 ? initWarehouseCoinSpaceLayer(layer3) : null;
     var instances = [inst1, inst2, inst3];
+    _instances = instances;
 
     /* Pinned scroll orchestrator */
     initPinnedScroll(section, layers, instances);
-
-    /* Resize handler */
-    window.addEventListener('resize', function () {
-      instances.forEach(function (inst) {
-        if (inst && inst.resize) inst.resize();
-      });
-    });
 
     /* Fixed header fade (replaces BxStickyHeaders) */
     var ufHeader = section.querySelector('.uf-header');
     initFixedHeaderFade(section, ufHeader);
   }
 
-  return { init: init };
+  function resize() {
+    _instances.forEach(function (inst) {
+      if (inst && inst.resize) inst.resize();
+    });
+  }
+
+  return { init: init, resize: resize };
 })();

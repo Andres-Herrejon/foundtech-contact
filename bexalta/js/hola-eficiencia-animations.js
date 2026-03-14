@@ -25,7 +25,8 @@ window.BxHolaEficienciaAnimations = (function () {
       scrollTrigger: {
         trigger: header,
         start: 'top 82%',
-        toggleActions: 'play none none reverse'
+        toggleActions: 'play none none reverse',
+        invalidateOnRefresh: true
       },
       onComplete: function () { header.style.willChange = 'auto'; }
     });
@@ -50,7 +51,8 @@ window.BxHolaEficienciaAnimations = (function () {
       scrollTrigger: {
         trigger: content || section,
         start: 'top 78%',
-        toggleActions: 'play none none reverse'
+        toggleActions: 'play none none reverse',
+        invalidateOnRefresh: true
       },
       onComplete: function () {
         var tgts = this.targets();
@@ -76,7 +78,8 @@ window.BxHolaEficienciaAnimations = (function () {
           trigger: section,
           start: 'top bottom',
           end: 'bottom top',
-          scrub: 1.2
+          scrub: 1.2,
+          invalidateOnRefresh: true
         }
       });
     });
@@ -111,6 +114,7 @@ window.BxHolaEficienciaAnimations = (function () {
       start: 'top top',
       end: '+=300%',
       pin: true,
+      invalidateOnRefresh: true,
       onUpdate: function (self) {
         var p = self.progress;
         var o0, o1, o2;
@@ -179,6 +183,7 @@ window.BxHolaEficienciaAnimations = (function () {
       trigger: section,
       start: 'top top',
       end: '+=300%',       // matches the section's pin duration
+      invalidateOnRefresh: true,
       onEnter: staggerIn,
       onLeave: fadeOut,
       onEnterBack: staggerIn,
@@ -203,5 +208,7 @@ window.BxHolaEficienciaAnimations = (function () {
     initFixedHeaderFade(section, heHeader);
   }
 
-  return { init: init };
+  function resize() { /* no canvas — no-op */ }
+
+  return { init: init, resize: resize };
 })();

@@ -11,6 +11,14 @@
   max-width: 100vw;
   min-height: var(--bx-section-height);
   overflow: hidden;
+  /* Universal centering — content capped at 1200px, black fill on ultra-wide */
+  display: flex;
+  justify-content: center;
+}
+
+.bx-section > * {
+  max-width: 1200px;
+  width: 100%;
 }
 
 /* Hero needs overflow visible for ScrollTrigger pin */
@@ -31,6 +39,7 @@
 /* ---------- Container (content constrained) ---------- */
 .bx-container {
   position: relative;
+  width: 100%;
   max-width: var(--bx-section-width);
   margin: 0 auto;
   padding: 0 var(--bx-padding-x);
@@ -98,6 +107,14 @@
   width: 100%;
   z-index: 100;
   pointer-events: none;
+  /* Center overlay clone containers to match section centering */
+  display: flex;
+  justify-content: center;
+}
+
+#bx-header-overlay > * {
+  max-width: 1200px;
+  width: 100%;
 }
 
 /* ---------- Section fade transitions (T1.5) ---------- */

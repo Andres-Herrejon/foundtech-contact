@@ -33,14 +33,14 @@
 /* ---------- Stacked heading lines ---------- */
 .cta__headings {
   position: absolute;
-  top: 171px;
+  top: clamp(171px, 20.3%, 261px);
   left: 0;
   width: 100%;
   padding: 0 var(--bx-padding-x);
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 8px;
+  gap: clamp(8px, 1vw, 16px);
 }
 
 .cta__line {
@@ -60,14 +60,14 @@
 /* ---------- Sparkles area: "HOY" + CTA button ---------- */
 .cta__sparkles {
   position: absolute;
-  top: 470px;
+  top: clamp(470px, 55.7%, 650px);
   left: 0;
   width: 100%;
   padding: 0 var(--bx-padding-x);
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 56px;
+  gap: clamp(32px, 5svh, 80px); /* P2-Fix 8: svh instead of vw */
 }
 
 .cta__hoy {
@@ -81,6 +81,7 @@
   letter-spacing: 0.12em;
   padding-left: 0.12em;             /* compensate trailing letter-spacing for optical center */
   width: min(90vw, var(--bx-content-width));
+  margin-bottom: clamp(16px, 2.5svh, 32px); /* P2-Fix 8: svh-based HOY spacing */
 }
 
 .cta__button {
@@ -90,9 +91,9 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: min(55vw, 200px);
-  height: 48px;
-  padding: 12px 28px;
+  width: clamp(180px, 55vw, 276px);
+  height: clamp(48px, 6vw, 64px);
+  padding: clamp(12px, 1.5vw, 18px) clamp(28px, 4vw, 44px);
   background: var(--bx-bg);
   border: none;
   border-radius: var(--bx-radius-pill);
@@ -162,11 +163,11 @@
 /* ---------- Foundtech logo ---------- */
 .cta__logo {
   position: absolute;
-  top: 720px;
+  top: clamp(720px, 85.3%, 940px);
   left: 50%;
   transform: translateX(-50%);
-  width: min(65vw, 248px);
-  height: 62px;
+  width: clamp(220px, 65vw, 380px);
+  height: auto;
 }
 
 .cta__logo img {
@@ -174,3 +175,5 @@
   height: auto;
   display: block;
 }
+
+/* RC#1 FIX: Moved to responsive.css — cascade order requires it */

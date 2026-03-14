@@ -10,6 +10,7 @@
 window.BxImaginemosAnimations = (function () {
   'use strict';
 
+  var _instances = [];
   var PARTICLE_COUNT = 25000;
   var GRAY = new THREE.Color('#C7C6C6');
   var GREEN = new THREE.Color('#a2c62e');  // --bx-primary
@@ -28,10 +29,21 @@ window.BxImaginemosAnimations = (function () {
     var canvas = container.querySelector('canvas');
     if (!canvas) return null;
 
+    // RC#3 FIX: Graduated camZ for text morph — closer camera = bigger particles
+    var parentW = container.getBoundingClientRect().width;
+    var camZ;
+    if (parentW >= 1440) {
+      camZ = 7.5;   // +20% bigger than baseline
+    } else if (parentW >= 768) {
+      camZ = 6.4;   // +40% bigger than baseline
+    } else {
+      camZ = 9;     // baseline mobile
+    }
+
     var inst = BxParticleCore.create(canvas, {
       count: PARTICLE_COUNT,
       size: 0.3,
-      camZ: 9,
+      camZ: camZ,
       rotate: false
     });
     if (!inst) return null;
@@ -47,10 +59,21 @@ window.BxImaginemosAnimations = (function () {
     var canvas = container.querySelector('canvas');
     if (!canvas) return null;
 
+    // RC#3 FIX: Graduated camZ for city grid — closer camera = bigger particles
+    var parentW = container.getBoundingClientRect().width;
+    var camZ;
+    if (parentW >= 1440) {
+      camZ = 10;    // +20% bigger than baseline
+    } else if (parentW >= 768) {
+      camZ = 8.6;   // +40% bigger than baseline
+    } else {
+      camZ = 12;    // baseline mobile
+    }
+
     var inst = BxParticleCore.create(canvas, {
       count: PARTICLE_COUNT,
       rotate: true,
-      camZ: 12
+      camZ: camZ
     });
     if (!inst) return null;
     inst.setTarget(BxParticleCore.generateCityGrid(PARTICLE_COUNT));
@@ -75,7 +98,8 @@ window.BxImaginemosAnimations = (function () {
         scrollTrigger: {
           trigger: el,
           start: 'top 82%',
-          toggleActions: 'play none none reverse'
+          toggleActions: 'play none none reverse',
+          invalidateOnRefresh: true
         },
         onComplete: function () { el.style.willChange = 'auto'; }
       });
@@ -127,6 +151,7 @@ window.BxImaginemosAnimations = (function () {
       trigger: section,
       start: 'top top',
       end: '+=300%',
+      invalidateOnRefresh: true,
       onEnter: staggerIn,
       onLeave: fadeOut,
       onEnterBack: staggerIn,
@@ -166,6 +191,7 @@ window.BxImaginemosAnimations = (function () {
       pin: true,
       pinSpacing: true,
       scrub: false,
+      invalidateOnRefresh: true,
       onUpdate: function (self) {
         var p = self.progress; // 0 → 1
 
@@ -196,11 +222,12 @@ window.BxImaginemosAnimations = (function () {
     var morphContainer = section.querySelector('.bx-text-morph');
     var texts = morphContainer ? parseTexts(morphContainer) : [];
 
-    // 2. Text-morph instance
+    // 2. Text-morph instance — store at module scope for resize
     var morphInst = null;
     if (morphContainer && texts.length > 0) {
       morphInst = initTextMorph(morphContainer, texts);
       if (morphInst) {
+        _instances.push(morphInst);
         if (window.__bxObserveWidget) {
           window.__bxObserveWidget(morphContainer, morphInst);
         } else {
@@ -215,6 +242,7 @@ window.BxImaginemosAnimations = (function () {
     if (gridContainer) {
       gridInst = initCityGrid(gridContainer);
       if (gridInst) {
+        _instances.push(gridInst);
         if (window.__bxObserveWidget) {
           window.__bxObserveWidget(gridContainer, gridInst);
         } else {
@@ -232,12 +260,13 @@ window.BxImaginemosAnimations = (function () {
       initPinnedScroll(section, morphInst, texts);
     }
 
-    // 6. Resize handler for particle instances
-    window.addEventListener('resize', function () {
-      if (morphInst && morphInst.resize) morphInst.resize();
-      if (gridInst && gridInst.resize) gridInst.resize();
-    });
   }
 
-  return { init: init };
+  function resize() {
+    for (var i = 0; i < _instances.length; i++) {
+      if (_instances[i] && _instances[i].resize) _instances[i].resize();
+    }
+  }
+
+  return { init: init, resize: resize };
 })();

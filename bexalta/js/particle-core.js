@@ -585,7 +585,9 @@ window.BxParticleCore = (function(){
 
     function resize(){
       const r=canvas.parentElement.getBoundingClientRect();
+      if(r.width<1||r.height<1)return;
       camera.aspect=r.width/r.height;camera.updateProjectionMatrix();
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio,1.5));
       renderer.setSize(r.width,r.height);
     }
 

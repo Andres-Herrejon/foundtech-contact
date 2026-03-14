@@ -25,7 +25,7 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 8px;
+  gap: clamp(6px, 1vw, 12px);
   z-index: 100;
   opacity: 0;
   pointer-events: none;
@@ -48,7 +48,7 @@
   font-family: var(--bx-font);
   font-weight: var(--bx-weight-light);
   font-size: 36px;
-  line-height: 39.6px;
+  line-height: 1.1;
   color: var(--bx-primary);
   margin: 0;
 }
@@ -100,14 +100,31 @@
   font-family: var(--bx-font);
   font-weight: var(--bx-weight-body);
   font-size: 15px;
-  line-height: 20px;
+  line-height: 1.4;
   color: #727070;
   margin: 0;
-  max-width: var(--bx-content-width);
+  max-width: clamp(320px, 85vw, var(--bx-content-width));
 }
 
 /* Highlighted (bold) spans within paragraph */
 .ar-paragraph__text strong {
   color: #c7c6c6;
   font-weight: var(--bx-weight-body);
+}
+
+/* Fix 12: Mobile theater/text separation — gradient fade at theater bottom */
+.ar-shape-morph::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: clamp(40px, 5vw, 80px);
+  background: linear-gradient(to bottom, transparent, #050505);
+  pointer-events: none;
+  z-index: 2;
+}
+
+.ar-paragraph {
+  padding-top: clamp(12px, 1.5vw, 24px);
 }
